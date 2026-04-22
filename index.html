@@ -515,13 +515,13 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
                 height: '0', width: '0',
+                videoId: 'FbrH6dDPERI', // 🔴 เพลงที่ต้องการเปลี่ยน
                 playerVars: {
-                    listType: 'playlist',
-                    list: 'PLHxDBCHg5cGO1juL0HRcJiYYus393MWkm',
                     autoplay: 0, 
                     loop: 1, 
                     controls: 0,
-                    mute: 0
+                    mute: 0,
+                    playlist: 'FbrH6dDPERI' // 🔴 บังคับให้เล่นวนซ้ำ
                 }
             });
         }
