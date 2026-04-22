@@ -1,3 +1,293 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bebby - Portfolio & Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Kanit', sans-serif; background-color: #f8f9fa; overflow-x: hidden; }
+        .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Glassmorphism Folder */
+        .glass-folder {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Progress Bar Animation */
+        .progress-bar { transition: width 1.5s ease-in-out; }
+        
+        /* Timeline */
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 20px; border-left: 2px solid #ddd; }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #000; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <nav class="bg-white shadow-md fixed w-full top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between md:justify-center space-x-2 md:space-x-8 py-4 overflow-x-auto text-sm md:text-base font-semibold whitespace-nowrap">
+                <button onclick="changeTab('home')" class="nav-btn text-black border-b-2 border-black pb-1" data-target="home">Home</button>
+                <button onclick="changeTab('price')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="price">Price</button>
+                <button onclick="changeTab('step')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="step">Step</button>
+                <button onclick="changeTab('example')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="example">Example</button>
+                <button onclick="changeTab('contact')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="contact">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="yt-player" class="hidden"></div>
+
+    <div class="pt-20 pb-20 max-w-5xl mx-auto px-4">
+
+        <section id="home" class="tab-content active">
+            <div class="relative bg-gray-200 h-64 rounded-xl overflow-hidden shadow-inner">
+                <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" alt="Cover" class="w-full h-full object-cover">
+            </div>
+            <div class="flex justify-center -mt-16 relative z-10">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+            </div>
+            
+            <div class="text-center mt-4 mb-10">
+                <h1 class="text-3xl font-bold">Welcome to bebby</h1>
+                <p class="text-gray-600 mt-2">Admin ice / bebby</p>
+                <p class="text-sm mt-1 bg-black text-white inline-block px-4 py-1 rounded-full">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm mb-8 space-y-3 text-sm md:text-base">
+                <p>🐈‍⬛ 𓏔 line : <b>@741eynzz</b> (มี@)</p>
+                <p>𓈒 —🐈‍⬛ งานป้ายเริ่มต้น 49 - 599฿ มีราคาเหมา 3 ป้ายขึ้นไป ┊</p>
+                <p>⏳ รองาน 1 - 14 วันตามคิว ( สอบถามคิวงานก่อนได้ค่ะ )</p>
+                <p>📓 คิดราคาตามรายละเอียดของงาน ปรึกษาได้น้า 💡🧸</p>
+                <p>📁 : <b>ส่งงานผ่าน Google Drive เท่านั้น !</b></p>
+                <p>✅ : บรีฟงานได้ทุกอย่าง ข้อมูลลูกค้าต้องพกเตรียมมาเอง</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                <a href="https://drive.google.com/drive/folders/1x3qtzrZDN9xQmhgP2O4LZGkTSUWg92kG" target="_blank" class="block group">
+                    <div class="relative h-64 bg-gray-100 rounded-2xl p-6 flex flex-col justify-center items-center shadow-md transition-transform transform hover:scale-105">
+                        <div class="w-32 h-24 bg-gray-800 rounded-lg relative shadow-xl">
+                            <div class="absolute w-28 h-20 bg-white left-2 -top-4 rounded flex flex-col gap-2 p-2 shadow-sm">
+                                <div class="w-full h-1 bg-gray-200 rounded"></div>
+                                <div class="w-3/4 h-1 bg-gray-200 rounded"></div>
+                                <div class="w-5/6 h-1 bg-gray-200 rounded"></div>
+                            </div>
+                            <div class="absolute w-full h-20 bottom-0 left-0 glass-folder rounded-b-lg flex items-center justify-center">
+                                <i class="fa-brands fa-google-drive text-3xl text-gray-800 opacity-80"></i>
+                            </div>
+                        </div>
+                        <p class="mt-8 font-semibold text-gray-700 group-hover:text-black">คลิกเพื่อดู Google Drive</p>
+                    </div>
+                </a>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm flex flex-col justify-center">
+                    <h2 class="text-xl font-bold mb-6 text-center">Hard Skills</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg" class="w-8 h-8 rounded" alt="Canva">
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Canva</p>
+                                <div class="w-full bg-gray-200 h-2 rounded-full mt-1"><div class="bg-black h-2 rounded-full progress-bar" style="width: 100%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="https://img.icons8.com/color/48/capcut.png" class="w-8 h-8 rounded" alt="CapCut">
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">CapCut</p>
+                                <div class="w-full bg-gray-200 h-2 rounded-full mt-1"><div class="bg-black h-2 rounded-full progress-bar" style="width: 90%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="https://play-lh.googleusercontent.com/9m_T2SIs3V-2vUjYvE8S79z7Y_EwDq1GZ4L6xP_6xGk_vN8S6b0Y1N0GjE_Q_P9XG_I=w240-h480-rw" class="w-8 h-8 rounded" alt="ibis Paint">
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">ibis Paint</p>
+                                <div class="w-full bg-gray-200 h-2 rounded-full mt-1"><div class="bg-black h-2 rounded-full progress-bar" style="width: 80%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Procreate_App_Icon.png" class="w-8 h-8 rounded" alt="Procreate">
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Procreate</p>
+                                <div class="w-full bg-gray-200 h-2 rounded-full mt-1"><div class="bg-black h-2 rounded-full progress-bar" style="width: 75%"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Clip_Studio_Paint_logo.png" class="w-8 h-8 rounded" alt="Clip Studio Paint">
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Clip Studio Paint</p>
+                                <div class="w-full bg-gray-200 h-2 rounded-full mt-1"><div class="bg-black h-2 rounded-full progress-bar" style="width: 40%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-10">
+                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="w-full h-auto rounded-xl shadow-md object-cover" alt="Image 1">
+                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="w-full h-auto rounded-xl shadow-md object-cover" alt="Image 2">
+            </div>
+        </section>
+
+        <section id="price" class="tab-content">
+            <h2 class="text-3xl font-bold text-center mb-8">Price List <br><span class="text-lg font-normal text-gray-500">รายการสินค้าและราคา</span></h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 border-b pb-2">งานออกแบบทั่วไป</h3>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between"><span>บล็อก</span> <span>เริ่มต้น 99฿</span></li>
+                        <li class="flex justify-between"><span>แนวสว่าง / แนวเรียบ</span> <span>เริ่มต้น 45฿</span></li>
+                        <li class="flex justify-between"><span>แนวกึ่ง ads.</span> <span>เริ่มต้น 59฿</span></li>
+                        <li class="flex justify-between"><span>งานป้าย</span> <span>เริ่มต้น 49฿</span></li>
+                        <li class="flex justify-between"><span>Set ปกกลุ่ม + กรอบตัวอย่าง</span> <span>เริ่ม 99฿</span></li>
+                        <li class="flex justify-between"><span>ป้ายเรท</span> <span>เริ่ม 70฿</span></li>
+                        <li class="flex justify-between"><span>ป้ายเบอร์เงิน/ทอง</span> <span>เริ่ม 65฿</span></li>
+                        <li class="flex justify-between"><span>บัตรสะสมแต้ม</span> <span>เริ่ม 89฿</span></li>
+                        <li class="flex justify-between"><span>ปก x / ปกไลน์ official</span> <span>เริ่ม 69฿ / 80฿</span></li>
+                        <li class="flex justify-between"><span>ริชเมนู (เล็ก/ใหญ่)</span> <span>69฿ / 100-120฿</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 border-b pb-2">โปรโมชั่น ลายน้ำ</h3>
+                    
+                    <h4 class="font-semibold text-pink-600 mt-2">✨ แบบสีสัน (งานละ 25฿)</h4>
+                    <ul class="space-y-1 text-sm mt-2 mb-4">
+                        <li class="flex justify-between"><span>5 งาน</span> <span>125฿</span></li>
+                        <li class="flex justify-between"><span>10 งาน (ลด 10฿)</span> <span><s class="text-red-500 text-xs">250฿</s> 240฿</span></li>
+                        <li class="flex justify-between"><span>15 งาน (ลด 15฿)</span> <span><s class="text-red-500 text-xs">375฿</s> 360฿</span></li>
+                        <li class="flex justify-between"><span>20 งาน (ลด 30฿)</span> <span><s class="text-red-500 text-xs">500฿</s> 470฿</span></li>
+                        <li class="flex justify-between"><span>25 งาน (ลด 40฿)</span> <span><s class="text-red-500 text-xs">625฿</s> 585฿</span></li>
+                        <li class="flex justify-between"><span>30 งาน (ลด 50฿)</span> <span><s class="text-red-500 text-xs">750฿</s> 700฿</span></li>
+                        <li class="flex justify-between"><span>35 งาน (ลด 60฿)</span> <span><s class="text-red-500 text-xs">875฿</s> 815฿</span></li>
+                        <li class="flex justify-between"><span>40 งาน (ลด 75฿)</span> <span><s class="text-red-500 text-xs">1000฿</s> 925฿</span></li>
+                    </ul>
+
+                    <h4 class="font-semibold text-gray-800 border-t pt-2">แบบสีขาว-ดำ (งานละ 15฿)</h4>
+                    <ul class="space-y-1 text-sm mt-2">
+                        <li class="flex justify-between"><span>5 งาน</span> <span>75฿</span></li>
+                        <li class="flex justify-between"><span>10 งาน (ลด 5฿)</span> <span><s class="text-red-500 text-xs">150฿</s> 145฿</span></li>
+                        <li class="flex justify-between"><span>15 งาน (ลด 15฿)</span> <span><s class="text-red-500 text-xs">225฿</s> 210฿</span></li>
+                        <li class="flex justify-between"><span>20 งาน (ลด 25฿)</span> <span><s class="text-red-500 text-xs">300฿</s> 275฿</span></li>
+                        <li class="flex justify-between"><span>25 งาน (ลด 30฿)</span> <span><s class="text-red-500 text-xs">375฿</s> 345฿</span></li>
+                        <li class="flex justify-between"><span>30 งาน (ลด 35฿)</span> <span><s class="text-red-500 text-xs">450฿</s> 415฿</span></li>
+                        <li class="flex justify-between"><span>35 งาน (ลด 45฿)</span> <span><s class="text-red-500 text-xs">525฿</s> 480฿</span></li>
+                        <li class="flex justify-between"><span>40 งาน (ลด 60฿)</span> <span><s class="text-red-500 text-xs">600฿</s> 540฿</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 border-b pb-2">เรทราคารับงานอื่นๆ</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p><b>สไลด์นำเสนอ:</b> เริ่มหน้าละ 20฿</p>
+                            <p><b>อินโฟกราฟิก/แผ่นพับ:</b> เริ่ม 79฿</p>
+                            <p><b>มายแมพ:</b> พิมพ์เริ่ม 60฿ / เขียนเริ่ม 70฿</p>
+                            <p><b>เรียงความ:</b> เริ่ม 150฿</p>
+                            <br>
+                            <p><b>งานลอก:</b> สมุด/ไอแพด หน้าละ 10฿ | รายงาน หน้าละ 15฿ | A4 หน้าละ 20฿</p>
+                            <p><b>การบ้าน:</b> คณิตข้อละ 5฿ (แสดงวิธีทำ 10฿) | อังกฤษ ข้อละ 3-5฿</p>
+                        </div>
+                        <div>
+                            <p><b>งานศิลปะ:</b> วาดภาพเริ่ม 70฿ | หนังสือเล็กเริ่ม 99฿ | ป๊อปอัพ 150฿</p>
+                            <p><b>ลายเส้น/ลายไทย:</b> เริ่ม 70฿ / 80฿</p>
+                            <br>
+                            <p><b>งานออกแบบ (มีข้อมูล / ไม่มีข้อมูล):</b></p>
+                            <p>โปสเตอร์: 60.- / 65.-</p>
+                            <p>มายแมพ: 60.- / 65.-</p>
+                            <p>แผ่นพับ: 70.- / 80.-</p>
+                            <p>เรซูเม่: 60.- / -</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="step" class="tab-content">
+            <h2 class="text-3xl font-bold text-center mb-8">ขั้นตอนและกติกา <br><span class="text-lg font-normal text-gray-500">How to order</span></h2>
+            
+            <div class="bg-white p-8 rounded-xl shadow-sm mb-6">
+                <h3 class="text-xl font-bold mb-6 text-red-600"><i class="fas fa-exclamation-circle"></i> โปรดอ่านทุกครั้งก่อนตัดสินใจจ้างงาน</h3>
+                
+                <div class="timeline-item">
+                    <h4 class="font-bold">1. การบรีฟและสรุปงาน</h4>
+                    <p class="text-sm text-gray-600 mt-1">เมื่อจ้างงานกับทางร้าน จะมีสรุปงานหลังจากที่ลูกค้าแจ้งหรือรับงานเสร็จเรียบร้อยทุกครั้ง ทางร้านจะมีตัวอย่างสรุปงานเป็นหลัก หากมีการเพิ่มเติมหลังงานเสร็จ อาจมี + เพิ่ม จึงควรบรีฟรายละเอียดตั้งแต่ครั้งแรก</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4 class="font-bold">2. กติกาการโอนเงิน (โอน = จองคิว)</h4>
+                    <p class="text-sm text-gray-600 mt-1">
+                        <b>โอนแบบ 100%:</b> โอนเต็มจำนวนของราคาที่ตกลงกัน<br>
+                        <b>โอนแบบ 50%:</b> (สำหรับยอด 300.- ขึ้นไป) โอนครึ่งหนึ่งของราคาที่ตกลงกัน ไม่มีการอัพเดทงานระหว่างทำงานก่อนจ่ายที่เหลือและจะโอนครบก่อนส่งงาน
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4 class="font-bold">3. การยกเลิกงาน</h4>
+                    <p class="text-sm text-gray-600 mt-1">ในกรณีที่ลูกค้าโอนมาแล้วแต่ต้องการยกเลิกงาน <b>ทางร้านขอสงวนสิทธิ์ไม่คืนเงินทุกกรณี</b> ไม่รับทำก่อนโอนไม่ว่ากรณีใดๆทั้งสิ้น</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded shadow-sm">
+                    <h3 class="font-bold text-lg mb-2"><i class="fas fa-bolt"></i> เรทราคาเร่งงาน</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex justify-between border-b border-yellow-200 pb-1"><span>รับงานภายใน 24 ชม.</span> <span class="font-bold text-red-500">+ 50฿</span></li>
+                        <li class="flex justify-between"><span>รับงานภายใน 3 ชม.</span> <span class="font-bold text-red-500">+ 100฿</span></li>
+                    </ul>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded shadow-sm">
+                    <h3 class="font-bold text-lg mb-2 text-red-600"><i class="fas fa-ban"></i> คำเตือน</h3>
+                    <ul class="list-disc list-inside text-sm space-y-1 text-gray-700">
+                        <li>ไม่รับทำงานตามร้านอื่นทุกกรณี</li>
+                        <li>ห้ามนำงานที่สั่งทำไปขายต่อเด็ดขาด (ถ้าจะขายต้องแจ้งก่อน)</li>
+                        <li>ห้ามหิ้วหรือนำงานร้านไปให้ที่อื่นทำเด็ดขาด</li>
+                        <li>ห้ามแอบอ้างผลงานทุกกรณี</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="example" class="tab-content">
+            <h2 class="text-3xl font-bold text-center mb-8">ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-500">Examples & Portfolio</span></h2>
+            
+            <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <p class="text-center text-gray-500 col-span-full mt-4"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงาน...</p>
+            </div>
+            
+            <p class="text-center mt-6 text-gray-500 text-sm">สามารถดูผลงานเพิ่มเติมได้ทาง Google Drive หรือสอบถามทางไลน์</p>
+        </section>
+
+        <section id="contact" class="tab-content text-center">
+            <h2 class="text-3xl font-bold mb-8">Contact Me <br><span class="text-lg font-normal text-gray-500">ช่องทางการติดต่อสั่งงาน</span></h2>
+            
+            <div class="bg-white p-10 rounded-2xl shadow-sm max-w-md mx-auto">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-gray-100">
+                <h3 class="text-xl font-bold">Admin Ice / Bebby</h3>
+                <p class="text-gray-500 text-sm mb-8">ตอบแชทไว สอบถามคิวงานได้เลยค่ะ</p>
+                
+                <a href="https://line.me/ti/p/~@741eynzz" target="_blank" class="block w-full bg-[#00B900] hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition mb-4 shadow-lg shadow-green-200">
+                    <i class="fa-brands fa-line text-xl mr-2"></i> LINE: @741eynzz
+                </a>
+                
+                <div class="text-sm text-gray-400 mt-6 border-t pt-4">
+                    <p>รับงานเป็นความลับระหว่างลูกค้าและทีมงาน</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
     <script>
         function changeTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -56,7 +346,7 @@
                 rows.forEach(row => {
                     const firstComma = row.indexOf(','); // แยกข้อมูลด้วยลูกน้ำ
                     if (firstComma > 0) {
-                        // เพิ่มการลบเครื่องหมายฟันหนู (") และช่องว่างส่วนเกินออกจากลิงก์รูป
+                        // ลบเครื่องหมายฟันหนู (") และช่องว่างส่วนเกินออกจากลิงก์รูป
                         const imgUrl = row.substring(0, firstComma).replace(/["\r]/g, '').trim();
                         // ลบเครื่องหมายฟันหนู (") ออกจากชื่อผลงาน
                         const title = row.substring(firstComma + 1).replace(/["\r]/g, '').trim();
@@ -86,3 +376,5 @@
         // สั่งให้ระบบเริ่มดึงข้อมูลทันทีที่เปิดเว็บ
         loadPortfolio();
     </script>
+</body>
+</html>
