@@ -9,61 +9,144 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Kanit', sans-serif; background-color: #f8f9fa; overflow-x: hidden; }
+        body { 
+            font-family: 'Kanit', sans-serif; 
+            overflow-x: hidden; 
+            /* 🔴 เปลี่ยนลิงก์รูปภาพพื้นหลังตรงนี้ */
+            background-image: url('https://via.placeholder.com/1920x1080?text=ใส่รูปพื้นหลังตรงนี้');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            /* สีพื้นหลังสำรองกรณีรูปโหลดไม่ขึ้น */
+            background-color: #fdf2f8; 
+        }
+
+        /* Glass Content Box - ทำให้กล่องเนื้อหาเบลอและโปร่งใส */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
         .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Glassmorphism Folder */
+        /* 3D Folder Glassmorphism */
         .glass-folder {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
         }
         
-        /* Progress Bar Animation */
         .progress-bar { transition: width 1.5s ease-in-out; }
         
-        /* Timeline */
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 20px; border-left: 2px solid #ddd; }
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #000; }
+
+        /* 🌟 ลูกเล่นโปรไฟล์ลอยได้ */
+        .profile-anim {
+            animation: floatProfile 3.5s ease-in-out infinite;
+        }
+        @keyframes floatProfile {
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-12px) scale(1.05) rotate(2deg); }
+        }
+
+        /* 🌟 แถบเมนูด้านล่าง (Bottom Navbar) */
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.05);
+        }
+        .nav-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .nav-btn:active { transform: scale(0.85); } /* เอฟเฟกต์ยุบตัวตอนกด */
+        .nav-active .nav-img-box { border-color: #000; transform: translateY(-3px); }
+        .nav-active .nav-text { color: #000; font-weight: 700; }
+
+        /* 🌟 หน้าต่างคำเตือนแตะจอ (Music Prompt) */
+        #music-prompt {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        .prompt-bounce { animation: bouncePrompt 2s infinite; }
+        @keyframes bouncePrompt {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* 🌟 อนิเมชันอีโมจิเวลาจิ้มจอ */
+        .emoji-pop {
+            position: fixed;
+            pointer-events: none;
+            font-size: 28px;
+            z-index: 9999;
+            animation: popUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            50% { transform: translate(-50%, -100px) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -150px) scale(1); opacity: 0; }
+        }
+
+        /* ตะกร้าสินค้า */
+        #floating-cart {
+            position: fixed; top: 20px; right: 20px; z-index: 50;
+            background: #ff477e; color: white; padding: 10px 20px;
+            border-radius: 30px; box-shadow: 0 4px 15px rgba(255,71,126,0.4);
+            font-weight: bold; transition: transform 0.2s; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+        }
+        #floating-cart:active { transform: scale(0.9); }
+        .price-item { cursor: pointer; transition: all 0.2s; }
+        .price-item:hover { background: rgba(255, 71, 126, 0.1); transform: translateX(5px); padding-left: 10px; border-radius: 8px; }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <nav class="bg-white shadow-md fixed w-full top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between md:justify-center space-x-2 md:space-x-8 py-4 overflow-x-auto text-sm md:text-base font-semibold whitespace-nowrap">
-                <button onclick="changeTab('home')" class="nav-btn text-black border-b-2 border-black pb-1" data-target="home">Home</button>
-                <button onclick="changeTab('price')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="price">Price</button>
-                <button onclick="changeTab('step')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="step">Step</button>
-                <button onclick="changeTab('example')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="example">Example</button>
-                <button onclick="changeTab('contact')" class="nav-btn text-gray-500 hover:text-black pb-1" data-target="contact">Contact</button>
-            </div>
+    <div id="music-prompt">
+        <div class="prompt-bounce text-center text-gray-800 bg-white/50 p-10 rounded-3xl shadow-xl border border-white">
+            <i class="fa-solid fa-hand-pointer text-6xl mb-6 text-pink-400"></i>
+            <h2 class="text-3xl font-bold mb-2">แตะหน้าจอ 1 ครั้ง</h2>
+            <p class="text-lg text-gray-600">เพื่อปลุกความน่ารัก และเล่นเพลง 🎶</p>
         </div>
-    </nav>
+    </div>
+
+    <div id="floating-cart" onclick="clearCart()" title="กดเพื่อล้างยอด">
+        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-total-amt">0</span>฿
+    </div>
 
     <div id="yt-player" class="hidden"></div>
 
-    <div class="pt-20 pb-20 max-w-5xl mx-auto px-4">
+    <div class="pt-8 pb-32 max-w-5xl mx-auto px-4">
 
         <section id="home" class="tab-content active">
-            <div class="relative bg-gray-200 h-64 rounded-xl overflow-hidden shadow-inner">
+            <div class="relative bg-white/50 h-64 rounded-xl overflow-hidden shadow-inner">
                 <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" alt="Cover" class="w-full h-full object-cover">
             </div>
             <div class="flex justify-center -mt-16 relative z-10">
-                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="profile-anim w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
             </div>
             
-            <div class="text-center mt-4 mb-10">
+            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm">
                 <h1 class="text-3xl font-bold">Welcome to bebby</h1>
                 <p class="text-gray-600 mt-2">Admin ice / bebby</p>
-                <p class="text-sm mt-1 bg-black text-white inline-block px-4 py-1 rounded-full">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
+                <p class="text-sm mt-3 bg-black text-white inline-block px-5 py-2 rounded-full shadow-md">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-sm mb-8 space-y-3 text-sm md:text-base">
+            <div class="glass-box p-6 rounded-xl mb-8 space-y-3 text-sm md:text-base">
                 <p>🐈‍⬛ 𓏔 line : <b>@741eynzz</b> (มี@)</p>
                 <p>𓈒 —🐈‍⬛ งานป้ายเริ่มต้น 49 - 599฿ มีราคาเหมา 3 ป้ายขึ้นไป ┊</p>
                 <p>⏳ รองาน 1 - 14 วันตามคิว ( สอบถามคิวงานก่อนได้ค่ะ )</p>
@@ -74,7 +157,7 @@
 
             <div class="grid md:grid-cols-2 gap-8 mb-10">
                 <a href="https://drive.google.com/drive/folders/1x3qtzrZDN9xQmhgP2O4LZGkTSUWg92kG" target="_blank" class="block group">
-                    <div class="relative h-64 bg-gray-100 rounded-2xl p-6 flex flex-col justify-center items-center shadow-md transition-transform transform hover:scale-105">
+                    <div class="relative h-64 glass-box rounded-2xl p-6 flex flex-col justify-center items-center transition-transform transform hover:scale-105">
                         <div class="w-32 h-24 bg-gray-800 rounded-lg relative shadow-xl">
                             <div class="absolute w-28 h-20 bg-white left-2 -top-4 rounded flex flex-col gap-2 p-2 shadow-sm">
                                 <div class="w-full h-1 bg-gray-200 rounded"></div>
@@ -89,7 +172,7 @@
                     </div>
                 </a>
 
-                <div class="bg-white p-6 rounded-2xl shadow-sm flex flex-col justify-center">
+                <div class="glass-box p-6 rounded-2xl flex flex-col justify-center">
                     <h2 class="text-xl font-bold mb-6 text-center">Hard Skills</h2>
                     <div class="space-y-4">
                         <div class="flex items-center gap-4">
@@ -142,176 +225,226 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-4 mb-10">
-                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="w-full h-auto rounded-xl shadow-md object-cover" alt="Image 1">
-                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="w-full h-auto rounded-xl shadow-md object-cover" alt="Image 2">
+                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="w-full h-auto rounded-xl shadow-md object-cover border-4 border-white" alt="Image 1">
+                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="w-full h-auto rounded-xl shadow-md object-cover border-4 border-white" alt="Image 2">
             </div>
         </section>
 
         <section id="price" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8">Price List <br><span class="text-lg font-normal text-gray-500">รายการสินค้าและราคา</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">Price List <br><span class="text-lg font-normal text-gray-600">รายการสินค้าและราคา</span></h2>
+            <p class="text-center text-sm text-pink-500 mb-4 font-semibold"><i class="fas fa-info-circle"></i> ลองจิ้มที่ราคาสินค้าเพื่อคำนวณยอดรวมที่ตะกร้าด้านขวาบนได้เลย!</p>
             
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold mb-4 border-b pb-2">งานออกแบบทั่วไป</h3>
-                    <ul class="space-y-2">
-                        <li class="flex justify-between"><span>บล็อก</span> <span>เริ่มต้น 99฿</span></li>
-                        <li class="flex justify-between"><span>แนวสว่าง / แนวเรียบ</span> <span>เริ่มต้น 45฿</span></li>
-                        <li class="flex justify-between"><span>แนวกึ่ง ads.</span> <span>เริ่มต้น 59฿</span></li>
-                        <li class="flex justify-between"><span>งานป้าย</span> <span>เริ่มต้น 49฿</span></li>
-                        <li class="flex justify-between"><span>Set ปกกลุ่ม + กรอบตัวอย่าง</span> <span>เริ่ม 99฿</span></li>
-                        <li class="flex justify-between"><span>ป้ายเรท</span> <span>เริ่ม 70฿</span></li>
-                        <li class="flex justify-between"><span>ป้ายเบอร์เงิน/ทอง</span> <span>เริ่ม 65฿</span></li>
-                        <li class="flex justify-between"><span>บัตรสะสมแต้ม</span> <span>เริ่ม 89฿</span></li>
-                        <li class="flex justify-between"><span>ปก x / ปกไลน์ official</span> <span>เริ่ม 69฿ / 80฿</span></li>
-                        <li class="flex justify-between"><span>ริชเมนู (เล็ก/ใหญ่)</span> <span>69฿ / 100-120฿</span></li>
+                <div class="glass-box p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 border-b border-gray-300 pb-2">งานออกแบบทั่วไป</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(99)"><span>บล็อก</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">99฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(45)"><span>แนวสว่าง / แนวเรียบ</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">45฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(59)"><span>แนวกึ่ง ads.</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">59฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(49)"><span>งานป้าย</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">49฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(99)"><span>Set ปกกลุ่ม + กรอบ</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">99฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(70)"><span>ป้ายเรท</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">70฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(89)"><span>บัตรสะสมแต้ม</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">89฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(100)"><span>ริชเมนู (ใหญ่)</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">100฿</span></li>
                     </ul>
                 </div>
 
-                <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <h3 class="text-xl font-bold mb-4 border-b pb-2">โปรโมชั่น ลายน้ำ</h3>
+                <div class="glass-box p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 border-b border-gray-300 pb-2">โปรโมชั่น ลายน้ำ</h3>
                     
-                    <h4 class="font-semibold text-pink-600 mt-2">✨ แบบสีสัน (งานละ 25฿)</h4>
-                    <ul class="space-y-1 text-sm mt-2 mb-4">
-                        <li class="flex justify-between"><span>5 งาน</span> <span>125฿</span></li>
-                        <li class="flex justify-between"><span>10 งาน (ลด 10฿)</span> <span><s class="text-red-500 text-xs">250฿</s> 240฿</span></li>
-                        <li class="flex justify-between"><span>15 งาน (ลด 15฿)</span> <span><s class="text-red-500 text-xs">375฿</s> 360฿</span></li>
-                        <li class="flex justify-between"><span>20 งาน (ลด 30฿)</span> <span><s class="text-red-500 text-xs">500฿</s> 470฿</span></li>
-                        <li class="flex justify-between"><span>25 งาน (ลด 40฿)</span> <span><s class="text-red-500 text-xs">625฿</s> 585฿</span></li>
-                        <li class="flex justify-between"><span>30 งาน (ลด 50฿)</span> <span><s class="text-red-500 text-xs">750฿</s> 700฿</span></li>
-                        <li class="flex justify-between"><span>35 งาน (ลด 60฿)</span> <span><s class="text-red-500 text-xs">875฿</s> 815฿</span></li>
-                        <li class="flex justify-between"><span>40 งาน (ลด 75฿)</span> <span><s class="text-red-500 text-xs">1000฿</s> 925฿</span></li>
+                    <h4 class="font-semibold text-pink-600 mt-2">✨ แบบสีสัน</h4>
+                    <ul class="space-y-2 text-sm mt-2 mb-4">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(125)"><span>5 งาน</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">125฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(240)"><span>10 งาน (ลด 10฿)</span> <span><s class="text-red-500 text-xs">250฿</s> <span class="bg-white px-2 py-1 rounded shadow-sm font-bold">240฿</span></span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(360)"><span>15 งาน (ลด 15฿)</span> <span><s class="text-red-500 text-xs">375฿</s> <span class="bg-white px-2 py-1 rounded shadow-sm font-bold">360฿</span></span></li>
                     </ul>
 
-                    <h4 class="font-semibold text-gray-800 border-t pt-2">แบบสีขาว-ดำ (งานละ 15฿)</h4>
-                    <ul class="space-y-1 text-sm mt-2">
-                        <li class="flex justify-between"><span>5 งาน</span> <span>75฿</span></li>
-                        <li class="flex justify-between"><span>10 งาน (ลด 5฿)</span> <span><s class="text-red-500 text-xs">150฿</s> 145฿</span></li>
-                        <li class="flex justify-between"><span>15 งาน (ลด 15฿)</span> <span><s class="text-red-500 text-xs">225฿</s> 210฿</span></li>
-                        <li class="flex justify-between"><span>20 งาน (ลด 25฿)</span> <span><s class="text-red-500 text-xs">300฿</s> 275฿</span></li>
-                        <li class="flex justify-between"><span>25 งาน (ลด 30฿)</span> <span><s class="text-red-500 text-xs">375฿</s> 345฿</span></li>
-                        <li class="flex justify-between"><span>30 งาน (ลด 35฿)</span> <span><s class="text-red-500 text-xs">450฿</s> 415฿</span></li>
-                        <li class="flex justify-between"><span>35 งาน (ลด 45฿)</span> <span><s class="text-red-500 text-xs">525฿</s> 480฿</span></li>
-                        <li class="flex justify-between"><span>40 งาน (ลด 60฿)</span> <span><s class="text-red-500 text-xs">600฿</s> 540฿</span></li>
+                    <h4 class="font-semibold text-gray-800 border-t border-gray-300 pt-2">แบบสีขาว-ดำ</h4>
+                    <ul class="space-y-2 text-sm mt-2">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(75)"><span>5 งาน</span> <span class="bg-white px-2 py-1 rounded shadow-sm text-sm">75฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(145)"><span>10 งาน (ลด 5฿)</span> <span><s class="text-red-500 text-xs">150฿</s> <span class="bg-white px-2 py-1 rounded shadow-sm font-bold">145฿</span></span></li>
                     </ul>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm md:col-span-2">
-                    <h3 class="text-xl font-bold mb-4 border-b pb-2">เรทราคารับงานอื่นๆ</h3>
-                    <div class="grid md:grid-cols-2 gap-4 text-sm">
-                        <div>
-                            <p><b>สไลด์นำเสนอ:</b> เริ่มหน้าละ 20฿</p>
-                            <p><b>อินโฟกราฟิก/แผ่นพับ:</b> เริ่ม 79฿</p>
-                            <p><b>มายแมพ:</b> พิมพ์เริ่ม 60฿ / เขียนเริ่ม 70฿</p>
-                            <p><b>เรียงความ:</b> เริ่ม 150฿</p>
-                            <br>
-                            <p><b>งานลอก:</b> สมุด/ไอแพด หน้าละ 10฿ | รายงาน หน้าละ 15฿ | A4 หน้าละ 20฿</p>
-                            <p><b>การบ้าน:</b> คณิตข้อละ 5฿ (แสดงวิธีทำ 10฿) | อังกฤษ ข้อละ 3-5฿</p>
-                        </div>
-                        <div>
-                            <p><b>งานศิลปะ:</b> วาดภาพเริ่ม 70฿ | หนังสือเล็กเริ่ม 99฿ | ป๊อปอัพ 150฿</p>
-                            <p><b>ลายเส้น/ลายไทย:</b> เริ่ม 70฿ / 80฿</p>
-                            <br>
-                            <p><b>งานออกแบบ (มีข้อมูล / ไม่มีข้อมูล):</b></p>
-                            <p>โปสเตอร์: 60.- / 65.-</p>
-                            <p>มายแมพ: 60.- / 65.-</p>
-                            <p>แผ่นพับ: 70.- / 80.-</p>
-                            <p>เรซูเม่: 60.- / -</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
 
         <section id="step" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8">ขั้นตอนและกติกา <br><span class="text-lg font-normal text-gray-500">How to order</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">ขั้นตอนและกติกา <br><span class="text-lg font-normal text-gray-600">How to order</span></h2>
             
-            <div class="bg-white p-8 rounded-xl shadow-sm mb-6">
+            <div class="glass-box p-8 rounded-xl mb-6">
                 <h3 class="text-xl font-bold mb-6 text-red-600"><i class="fas fa-exclamation-circle"></i> โปรดอ่านทุกครั้งก่อนตัดสินใจจ้างงาน</h3>
                 
                 <div class="timeline-item">
                     <h4 class="font-bold">1. การบรีฟและสรุปงาน</h4>
-                    <p class="text-sm text-gray-600 mt-1">เมื่อจ้างงานกับทางร้าน จะมีสรุปงานหลังจากที่ลูกค้าแจ้งหรือรับงานเสร็จเรียบร้อยทุกครั้ง ทางร้านจะมีตัวอย่างสรุปงานเป็นหลัก หากมีการเพิ่มเติมหลังงานเสร็จ อาจมี + เพิ่ม จึงควรบรีฟรายละเอียดตั้งแต่ครั้งแรก</p>
+                    <p class="text-sm text-gray-700 mt-1">เมื่อจ้างงานกับทางร้าน จะมีสรุปงานหลังจากที่ลูกค้าแจ้งเรียบร้อย หากมีการเพิ่มเติมหลังงานเสร็จ อาจมี + เพิ่ม</p>
                 </div>
-                
                 <div class="timeline-item">
                     <h4 class="font-bold">2. กติกาการโอนเงิน (โอน = จองคิว)</h4>
-                    <p class="text-sm text-gray-600 mt-1">
-                        <b>โอนแบบ 100%:</b> โอนเต็มจำนวนของราคาที่ตกลงกัน<br>
-                        <b>โอนแบบ 50%:</b> (สำหรับยอด 300.- ขึ้นไป) โอนครึ่งหนึ่งของราคาที่ตกลงกัน ไม่มีการอัพเดทงานระหว่างทำงานก่อนจ่ายที่เหลือและจะโอนครบก่อนส่งงาน
+                    <p class="text-sm text-gray-700 mt-1">
+                        <b>โอน 100%:</b> โอนเต็มจำนวน<br>
+                        <b>โอน 50%:</b> (ยอด 300.- ขึ้นไป) ไม่มีการอัพเดทงานระหว่างทำ จะโอนครบก่อนส่งงาน
                     </p>
                 </div>
-
                 <div class="timeline-item">
                     <h4 class="font-bold">3. การยกเลิกงาน</h4>
-                    <p class="text-sm text-gray-600 mt-1">ในกรณีที่ลูกค้าโอนมาแล้วแต่ต้องการยกเลิกงาน <b>ทางร้านขอสงวนสิทธิ์ไม่คืนเงินทุกกรณี</b> ไม่รับทำก่อนโอนไม่ว่ากรณีใดๆทั้งสิ้น</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded shadow-sm">
-                    <h3 class="font-bold text-lg mb-2"><i class="fas fa-bolt"></i> เรทราคาเร่งงาน</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li class="flex justify-between border-b border-yellow-200 pb-1"><span>รับงานภายใน 24 ชม.</span> <span class="font-bold text-red-500">+ 50฿</span></li>
-                        <li class="flex justify-between"><span>รับงานภายใน 3 ชม.</span> <span class="font-bold text-red-500">+ 100฿</span></li>
-                    </ul>
-                </div>
-
-                <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded shadow-sm">
-                    <h3 class="font-bold text-lg mb-2 text-red-600"><i class="fas fa-ban"></i> คำเตือน</h3>
-                    <ul class="list-disc list-inside text-sm space-y-1 text-gray-700">
-                        <li>ไม่รับทำงานตามร้านอื่นทุกกรณี</li>
-                        <li>ห้ามนำงานที่สั่งทำไปขายต่อเด็ดขาด (ถ้าจะขายต้องแจ้งก่อน)</li>
-                        <li>ห้ามหิ้วหรือนำงานร้านไปให้ที่อื่นทำเด็ดขาด</li>
-                        <li>ห้ามแอบอ้างผลงานทุกกรณี</li>
-                    </ul>
+                    <p class="text-sm text-gray-700 mt-1"><b>ทางร้านขอสงวนสิทธิ์ไม่คืนเงินทุกกรณี</b> ไม่รับทำก่อนโอนไม่ว่ากรณีใดๆทั้งสิ้น</p>
                 </div>
             </div>
         </section>
 
         <section id="example" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8">ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-500">Examples & Portfolio</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-600">Examples & Portfolio</span></h2>
             
             <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <p class="text-center text-gray-500 col-span-full mt-4"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงาน...</p>
+                <p class="text-center text-gray-700 col-span-full mt-4 glass-box p-4 rounded-xl"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงานจาก Google Sheets...</p>
             </div>
-            
-            <p class="text-center mt-6 text-gray-500 text-sm">สามารถดูผลงานเพิ่มเติมได้ทาง Google Drive หรือสอบถามทางไลน์</p>
+            <p class="text-center mt-6 text-gray-600 text-sm bg-white/50 inline-block px-4 py-1 rounded-full">สามารถดูผลงานเพิ่มเติมได้ทาง Google Drive หรือสอบถามทางไลน์</p>
         </section>
 
         <section id="contact" class="tab-content text-center">
-            <h2 class="text-3xl font-bold mb-8">Contact Me <br><span class="text-lg font-normal text-gray-500">ช่องทางการติดต่อสั่งงาน</span></h2>
+            <h2 class="text-3xl font-bold mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">Contact Me <br><span class="text-lg font-normal text-gray-600">ช่องทางการติดต่อสั่งงาน</span></h2>
             
-            <div class="bg-white p-10 rounded-2xl shadow-sm max-w-md mx-auto">
-                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-gray-100">
-                <h3 class="text-xl font-bold">Admin Ice / Bebby</h3>
-                <p class="text-gray-500 text-sm mb-8">ตอบแชทไว สอบถามคิวงานได้เลยค่ะ</p>
+            <div class="glass-box p-10 rounded-3xl max-w-md mx-auto">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-md profile-anim">
+                <h3 class="text-2xl font-bold">Admin Ice / Bebby</h3>
+                <p class="text-gray-600 text-sm mb-8">ตอบแชทไว สอบถามคิวงานได้เลยค่ะ</p>
                 
-                <a href="https://line.me/ti/p/~@741eynzz" target="_blank" class="block w-full bg-[#00B900] hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition mb-4 shadow-lg shadow-green-200">
-                    <i class="fa-brands fa-line text-xl mr-2"></i> LINE: @741eynzz
+                <a href="https://line.me/ti/p/~@741eynzz" target="_blank" class="block w-full bg-[#00B900] hover:bg-green-600 text-white font-bold py-4 px-4 rounded-2xl transition transform hover:scale-105 shadow-lg shadow-green-200/50">
+                    <i class="fa-brands fa-line text-2xl mr-2 align-middle"></i> ทัก LINE: @741eynzz
                 </a>
-                
-                <div class="text-sm text-gray-400 mt-6 border-t pt-4">
-                    <p>รับงานเป็นความลับระหว่างลูกค้าและทีมงาน</p>
-                </div>
             </div>
         </section>
 
     </div>
 
+    <nav class="bottom-nav fixed bottom-0 left-0 w-full z-40 rounded-t-3xl pb-safe">
+        <div class="max-w-md mx-auto px-6 py-2">
+            <div class="flex justify-between items-center text-[11px] md:text-xs">
+                
+                <button onclick="changeTab('home')" class="nav-btn nav-active flex flex-col items-center gap-1" data-target="home">
+                    <div class="p-1 rounded-full border-2 border-transparent transition-all nav-img-box">
+                        <img src="https://via.placeholder.com/60?text=H" class="w-8 h-8 rounded-full object-cover shadow-sm bg-white">
+                    </div>
+                    <span class="nav-text text-gray-400">Home</span>
+                </button>
+
+                <button onclick="changeTab('price')" class="nav-btn flex flex-col items-center gap-1" data-target="price">
+                    <div class="p-1 rounded-full border-2 border-transparent transition-all nav-img-box">
+                        <img src="https://via.placeholder.com/60?text=฿" class="w-8 h-8 rounded-full object-cover shadow-sm bg-white">
+                    </div>
+                    <span class="nav-text text-gray-400">Price</span>
+                </button>
+
+                <button onclick="changeTab('step')" class="nav-btn flex flex-col items-center gap-1" data-target="step">
+                    <div class="p-1 rounded-full border-2 border-transparent transition-all nav-img-box">
+                        <img src="https://via.placeholder.com/60?text=S" class="w-8 h-8 rounded-full object-cover shadow-sm bg-white">
+                    </div>
+                    <span class="nav-text text-gray-400">Step</span>
+                </button>
+
+                <button onclick="changeTab('example')" class="nav-btn flex flex-col items-center gap-1" data-target="example">
+                    <div class="p-1 rounded-full border-2 border-transparent transition-all nav-img-box">
+                        <img src="https://via.placeholder.com/60?text=E" class="w-8 h-8 rounded-full object-cover shadow-sm bg-white">
+                    </div>
+                    <span class="nav-text text-gray-400">Example</span>
+                </button>
+
+                <button onclick="changeTab('contact')" class="nav-btn flex flex-col items-center gap-1" data-target="contact">
+                    <div class="p-1 rounded-full border-2 border-transparent transition-all nav-img-box">
+                        <img src="https://via.placeholder.com/60?text=C" class="w-8 h-8 rounded-full object-cover shadow-sm bg-white">
+                    </div>
+                    <span class="nav-text text-gray-400">Contact</span>
+                </button>
+
+            </div>
+        </div>
+    </nav>
+
     <script>
+        // --- ระบบยอดเงินตะกร้าสินค้าแบบ Persistent (เก็บค่าไว้ไม่หาย) ---
+        let cartTotal = parseInt(localStorage.getItem('bebbyCartTotal')) || 0;
+        updateCartUI();
+
+        function addToCart(price) {
+            cartTotal += price;
+            localStorage.setItem('bebbyCartTotal', cartTotal);
+            updateCartUI();
+            
+            // สร้างอีโมจิตะกร้าเด้งตรงกลางจอเป็นลูกเล่นเพิ่มเติม
+            const span = document.createElement('span');
+            span.className = 'emoji-pop';
+            span.innerText = '🛍️';
+            span.style.left = '50%';
+            span.style.top = '50%';
+            document.body.appendChild(span);
+            setTimeout(() => span.remove(), 1000);
+        }
+
+        function clearCart() {
+            if(confirm("ต้องการล้างยอดรวมสินค้าใช่หรือไม่?")) {
+                cartTotal = 0;
+                localStorage.setItem('bebbyCartTotal', 0);
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-total-amt').innerText = cartTotal;
+        }
+
+        // --- ระบบเปลี่ยนแท็บเมนู ---
         function changeTab(tabId) {
+            // ซ่อนเนื้อหาทั้งหมด
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => {
-                el.classList.remove('text-black', 'border-b-2', 'border-black');
-                el.classList.add('text-gray-500');
-            });
+            // ล้างสไตล์ปุ่มเมนูทั้งหมด
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('nav-active'));
+            
+            // โชว์เนื้อหาใหม่และไฮไลต์ปุ่ม
             document.getElementById(tabId).classList.add('active');
-            const activeBtn = document.querySelector(`.nav-btn[data-target="${tabId}"]`);
-            activeBtn.classList.remove('text-gray-500');
-            activeBtn.classList.add('text-black', 'border-b-2', 'border-black');
+            document.querySelector(`.nav-btn[data-target="${tabId}"]`).classList.add('nav-active');
+            
+            // เลื่อนกลับไปบนสุดนุ่มนวล
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // --- ระบบเตือนให้แตะจอเล่นเพลง ---
+        let hasStarted = false;
+        document.body.addEventListener('click', function(e) {
+            // ซ่อนหน้าต่างคำเตือนและเล่นเพลงเมื่อกดจอครั้งแรก
+            if (!hasStarted) {
+                hasStarted = true;
+                const promptEl = document.getElementById('music-prompt');
+                promptEl.style.opacity = '0';
+                setTimeout(() => promptEl.style.display = 'none', 500); // เอาออกจากจอหลังเฟดหาย
+                
+                if (player && player.getPlayerState && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.playVideo();
+                }
+            }
+        });
+
+        // --- ลูกเล่นอีโมจิเด้งตอนกดหน้าจอ ---
+        const emojis = ['🧸', '🫧', '👑', '🌥️', '🍄', '⭐️', '🩷'];
+        document.addEventListener('click', function(e) {
+            // สุ่มอีโมจิ
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // สร้าง Element
+            const span = document.createElement('span');
+            span.className = 'emoji-pop';
+            span.innerText = randomEmoji;
+            
+            // ให้ลอยขึ้นตรงจุดที่กด
+            span.style.left = e.clientX + 'px';
+            span.style.top = e.clientY + 'px';
+            
+            document.body.appendChild(span);
+            
+            // ลบทิ้งเมื่อแสดงจบ
+            setTimeout(() => span.remove(), 1000);
+        });
+
+        // --- ระบบ YouTube เพลงพื้นหลัง ---
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
@@ -319,67 +452,47 @@
                 playerVars: {
                     listType: 'playlist',
                     list: 'PLHxDBCHg5cGO1juL0HRcJiYYus393MWkm',
-                    autoplay: 1, 
+                    autoplay: 0, // ปิดออโต้เพลย์ ให้รอคนกดจอก่อน
                     loop: 1, 
                     controls: 0,
                     mute: 0
-                },
-                events: { 'onReady': onPlayerReady }
+                }
             });
         }
-
-        function onPlayerReady(event) { 
-            event.target.playVideo(); 
-        }
-
-        document.body.addEventListener('click', function() {
-            if (player && player.getPlayerState && player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                player.playVideo();
-            }
-        }, { once: true });
-
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // ระบบดึงรูปภาพอัตโนมัติจาก Google Sheets
+        // --- ระบบดึงรูปภาพอัตโนมัติจาก Google Sheets ---
         async function loadPortfolio() {
             const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv'; 
-            
             try {
                 const response = await fetch(sheetUrl);
                 const data = await response.text();
-                const rows = data.split('\n').slice(1); // ข้ามแถวที่ 1 (หัวตาราง)
-                
+                const rows = data.split('\n').slice(1); 
                 let htmlContent = '';
+                
                 rows.forEach(row => {
-                    const firstComma = row.indexOf(','); // แยกข้อมูลด้วยลูกน้ำ
+                    const firstComma = row.indexOf(','); 
                     if (firstComma > 0) {
-                        // 1. ดึงข้อความในคอลัมน์แรกมาทำความสะอาด
                         let rawUrl = row.substring(0, firstComma).replace(/["\r]/g, '').trim();
                         let finalUrl = rawUrl;
                         
-                        // 2. ถ้าเผลอก๊อปโค้ด HTML มา ให้ดึงเฉพาะลิงก์ใน src="..."
                         const srcMatch = rawUrl.match(/src=['"]([^'"]+)['"]/i);
-                        if (srcMatch) {
-                            finalUrl = srcMatch[1];
-                        } else {
-                            // 3. ถ้าเผลอก๊อปโค้ด BBCode มา ให้ดึงเฉพาะลิงก์ใน [img]...[/img]
+                        if (srcMatch) finalUrl = srcMatch[1];
+                        else {
                             const bbcodeMatch = rawUrl.match(/\[img\](.*?)\[\/img\]/i);
-                            if (bbcodeMatch) {
-                                finalUrl = bbcodeMatch[1];
-                            }
+                            if (bbcodeMatch) finalUrl = bbcodeMatch[1];
                         }
 
-                        // ดึงชื่อผลงานและทำความสะอาด
                         const title = row.substring(firstComma + 1).replace(/["\r]/g, '').trim();
                         
                         if (finalUrl !== '') {
                             htmlContent += `
-                            <div class="relative group rounded-xl overflow-hidden shadow-sm h-48 md:h-64">
-                                <img src="${finalUrl}" class="w-full h-full object-cover transition transform group-hover:scale-110 bg-gray-100" alt="Work" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Error'">
-                                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-center text-sm font-bold opacity-0 group-hover:opacity-100 transition">${title}</div>
+                            <div class="relative group rounded-2xl overflow-hidden shadow-md h-48 md:h-64 border-4 border-white bg-white">
+                                <img src="${finalUrl}" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-110" alt="Work" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Error'">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pt-8 pb-2 px-2 text-center text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition duration-300">${title}</div>
                             </div>`;
                         }
                     }
@@ -388,16 +501,14 @@
                 if(htmlContent !== '') {
                     document.getElementById('portfolio-gallery').innerHTML = htmlContent;
                 } else {
-                    document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-gray-500 col-span-full">ยังไม่มีผลงานในระบบ</p>';
+                    document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-gray-500 col-span-full glass-box p-4 rounded-xl">ยังไม่มีผลงานในระบบ</p>';
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-red-500 col-span-full">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>';
+                document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-red-500 col-span-full glass-box p-4 rounded-xl">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>';
             }
         }
-        
-        // สั่งให้ระบบเริ่มดึงข้อมูลทันทีที่เปิดเว็บ
         loadPortfolio();
     </script>
 </body>
