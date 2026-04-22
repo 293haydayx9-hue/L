@@ -261,16 +261,10 @@
         <section id="example" class="tab-content">
             <h2 class="text-3xl font-bold text-center mb-8">ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-500">Examples & Portfolio</span></h2>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="relative group rounded-xl overflow-hidden shadow-sm">
-                    <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="w-full h-full object-cover transition transform group-hover:scale-110" alt="Work">
-                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-center text-sm font-bold opacity-0 group-hover:opacity-100 transition">ตัวอย่างงาน 1</div>
-                </div>
-                <div class="relative group rounded-xl overflow-hidden shadow-sm">
-                    <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="w-full h-full object-cover transition transform group-hover:scale-110" alt="Work">
-                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-center text-sm font-bold opacity-0 group-hover:opacity-100 transition">ตัวอย่างงาน 2</div>
-                </div>
-                </div>
+            <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <p class="text-center text-gray-500 col-span-full mt-4"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงาน...</p>
+            </div>
+            
             <p class="text-center mt-6 text-gray-500 text-sm">สามารถดูผลงานเพิ่มเติมได้ทาง Google Drive หรือสอบถามทางไลน์</p>
         </section>
 
@@ -325,12 +319,9 @@
         }
 
         function onPlayerReady(event) { 
-            // พยายามเล่นเพลงอัตโนมัติทันทีที่โหลดเสร็จ
             event.target.playVideo(); 
         }
 
-        // ตัวช่วยสำหรับเบราว์เซอร์ที่บล็อก Autoplay
-        // หากผู้ใช้คลิกตรงไหนก็ตามบนหน้าจอ เพลงจะถูกบังคับให้เล่นทันที
         document.body.addEventListener('click', function() {
             if (player && player.getPlayerState && player.getPlayerState() !== YT.PlayerState.PLAYING) {
                 player.playVideo();
@@ -341,6 +332,48 @@
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // ระบบดึงรูปภาพอัตโนมัติจาก Google Sheets
+        async function loadPortfolio() {
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv'; 
+            
+            try {
+                const response = await fetch(sheetUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); // ข้ามแถวที่ 1 (หัวตาราง)
+                
+                let htmlContent = '';
+                rows.forEach(row => {
+                    const firstComma = row.indexOf(','); // แยกข้อมูลด้วยลูกน้ำ
+                    if (firstComma > 0) {
+                        const imgUrl = row.substring(0, firstComma).trim();
+                        // ลบเครื่องหมายคำพูดแปลกๆ ที่อาจติดมา
+                        const title = row.substring(firstComma + 1).replace(/["\r]/g, '').trim();
+                        
+                        if (imgUrl !== '') {
+                            htmlContent += `
+                            <div class="relative group rounded-xl overflow-hidden shadow-sm">
+                                <img src="${imgUrl}" class="w-full h-full object-cover transition transform group-hover:scale-110" alt="Work">
+                                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-center text-sm font-bold opacity-0 group-hover:opacity-100 transition">${title}</div>
+                            </div>`;
+                        }
+                    }
+                });
+                
+                if(htmlContent !== '') {
+                    document.getElementById('portfolio-gallery').innerHTML = htmlContent;
+                } else {
+                    document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-gray-500 col-span-full">ยังไม่มีผลงานในระบบ</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-red-500 col-span-full">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>';
+            }
+        }
+        
+        // สั่งให้ระบบเริ่มดึงข้อมูลทันทีที่เปิดเว็บ
+        loadPortfolio();
     </script>
 </body>
 </html>
