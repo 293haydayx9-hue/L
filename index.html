@@ -12,7 +12,6 @@
         body { 
             font-family: 'Kanit', sans-serif; 
             overflow-x: hidden; 
-            /* รูปภาพพื้นหลัง */
             background-image: url('https://i.postimg.cc/VknXGv5X/IMG-4081.jpg');
             background-size: cover;
             background-attachment: fixed;
@@ -20,7 +19,6 @@
             background-color: #fdf2f8; 
         }
 
-        /* Glass Content Box */
         .glass-box {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
@@ -32,7 +30,6 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 3D Folder Glassmorphism */
         .glass-folder {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -45,7 +42,6 @@
         .timeline-item { position: relative; padding-left: 30px; margin-bottom: 20px; border-left: 2px solid #ddd; }
         .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: #000; }
 
-        /* ลูกเล่นโปรไฟล์ลอยได้ */
         .profile-anim {
             animation: floatProfile 3.5s ease-in-out infinite;
         }
@@ -54,7 +50,6 @@
             50% { transform: translateY(-12px) scale(1.05) rotate(2deg); }
         }
 
-        /* แถบเมนูด้านล่าง (Bottom Navbar) */
         .bottom-nav {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(15px);
@@ -66,7 +61,6 @@
         .nav-active .nav-img-box { border-color: #000; transform: translateY(-3px); }
         .nav-active .nav-text { color: #000; font-weight: 700; }
 
-        /* หน้าต่างคำเตือนแตะจอ (Music Prompt) */
         #music-prompt {
             position: fixed;
             inset: 0;
@@ -86,7 +80,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* อนิเมชันอีโมจิเวลาจิ้มจอ */
         .emoji-pop {
             position: fixed;
             pointer-events: none;
@@ -100,7 +93,6 @@
             100% { transform: translate(-50%, -150px) scale(1); opacity: 0; }
         }
 
-        /* ตะกร้าสินค้า */
         #floating-cart {
             position: fixed; top: 20px; right: 20px; z-index: 50;
             background: #ff477e; color: white; padding: 10px 20px;
@@ -112,7 +104,6 @@
         .price-item { cursor: pointer; transition: all 0.2s; }
         .price-item:hover { background: rgba(255, 71, 126, 0.1); transform: translateX(5px); padding-left: 10px; border-radius: 8px; }
 
-        /* 🌟 เอฟเฟกต์จุดเรืองแสงออนไลน์/ออฟไลน์ */
         .status-online {
             background-color: #22c55e;
             box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
@@ -121,14 +112,12 @@
             background-color: #ef4444;
             box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
         }
-        /* แอนิเมชันกระพริบเบาๆ สำหรับไฟเรืองแสง */
         .glow-pulse { animation: glowPulse 2s infinite alternate; }
         @keyframes glowPulse {
             0% { filter: brightness(1); }
             100% { filter: brightness(1.3); }
         }
 
-        /* 🌟 เอฟเฟกต์พื้นหลังดาวตก */
         .shooting-stars {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -1; overflow: hidden;
@@ -175,7 +164,7 @@
         <i class="fa-solid fa-cart-shopping"></i> <span id="cart-total-amt">0</span>฿
     </div>
 
-    <div id="yt-player" class="hidden"></div>
+    <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px;"></div>
 
     <div class="pt-8 pb-32 max-w-5xl mx-auto px-4">
 
@@ -427,8 +416,6 @@
         function updateShopStatus() {
             const now = new Date();
             const hour = now.getHours();
-            // ออนไลน์ 06:00 - 00:59 (คือ 6 โมงเช้า ถึง เที่ยงคืนกว่าๆ) 
-            // ออฟไลน์ 01:00 - 05:59
             const isOnline = (hour >= 6 || hour === 0);
             
             const statusDots = document.querySelectorAll('.shop-status-indicator');
@@ -442,10 +429,9 @@
                 }
             });
         }
-        updateShopStatus(); // เรียกทำงานทันทีที่โหลดเว็บ
-        setInterval(updateShopStatus, 60000); // เช็คเวลาทุกๆ 1 นาที
+        updateShopStatus(); 
+        setInterval(updateShopStatus, 60000); 
 
-        // ตะกร้าสินค้า
         let cartTotal = parseInt(localStorage.getItem('bebbyCartTotal')) || 0;
         updateCartUI();
 
@@ -485,15 +471,50 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // 🌟 ตั้งค่า YouTube ให้เสียงออก 100%
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '1', width: '1', // เปลี่ยนจาก 0 เป็น 1 ป้องกันเบราว์เซอร์บางตัวบล็อก
+                videoId: 'FbrH6dDPERI',
+                playerVars: {
+                    autoplay: 0, 
+                    loop: 1, 
+                    controls: 0,
+                    mute: 0,
+                    playsinline: 1, // สำคัญมากสำหรับมือถือ iOS (ไม่ให้เด้งเต็มจอ)
+                    playlist: 'FbrH6dDPERI'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            // มั่นใจว่าไม่ได้ถูก Mute และเร่งเสียงสุดเมื่อโหลดเสร็จ
+            event.target.unMute();
+            event.target.setVolume(100);
+        }
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
         let hasStarted = false;
         document.body.addEventListener('click', function(e) {
             if (!hasStarted) {
-                hasStarted = true;
                 const promptEl = document.getElementById('music-prompt');
-                promptEl.style.opacity = '0';
-                setTimeout(() => promptEl.style.display = 'none', 500); 
+                if(promptEl) {
+                    promptEl.style.opacity = '0';
+                    setTimeout(() => promptEl.style.display = 'none', 500); 
+                }
+                hasStarted = true;
                 
-                if (player && player.getPlayerState && player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                // ตรวจสอบและสั่งเล่นเพลง
+                if (player && typeof player.playVideo === 'function') {
+                    player.unMute(); // กันเหนียวสำหรับบางเบราว์เซอร์
                     player.playVideo();
                 }
             }
@@ -510,25 +531,6 @@
             document.body.appendChild(span);
             setTimeout(() => span.remove(), 1000);
         });
-
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-player', {
-                height: '0', width: '0',
-                videoId: 'FbrH6dDPERI', // 🔴 เพลงที่ต้องการเปลี่ยน
-                playerVars: {
-                    autoplay: 0, 
-                    loop: 1, 
-                    controls: 0,
-                    mute: 0,
-                    playlist: 'FbrH6dDPERI' // 🔴 บังคับให้เล่นวนซ้ำ
-                }
-            });
-        }
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         async function loadPortfolio() {
             const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv'; 
