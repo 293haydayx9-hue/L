@@ -20,7 +20,7 @@
             background-color: #fdf2f8; 
         }
 
-        /* Glass Content Box - ทำให้กล่องเนื้อหาเบลอและโปร่งใส */
+        /* Glass Content Box */
         .glass-box {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
@@ -111,9 +111,57 @@
         #floating-cart:active { transform: scale(0.9); }
         .price-item { cursor: pointer; transition: all 0.2s; }
         .price-item:hover { background: rgba(255, 71, 126, 0.1); transform: translateX(5px); padding-left: 10px; border-radius: 8px; }
+
+        /* 🌟 เอฟเฟกต์จุดเรืองแสงออนไลน์/ออฟไลน์ */
+        .status-online {
+            background-color: #22c55e;
+            box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+        }
+        .status-offline {
+            background-color: #ef4444;
+            box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
+        }
+        /* แอนิเมชันกระพริบเบาๆ สำหรับไฟเรืองแสง */
+        .glow-pulse { animation: glowPulse 2s infinite alternate; }
+        @keyframes glowPulse {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); }
+        }
+
+        /* 🌟 เอฟเฟกต์พื้นหลังดาวตก */
+        .shooting-stars {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 3px; height: 3px; background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 15px rgba(255,255,255,1);
+            animation: shoot 4s linear infinite;
+        }
+        .star::before {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 150px; height: 1px;
+            background: linear-gradient(90deg, #fff, transparent);
+        }
+        @keyframes shoot {
+            0% { transform: translateX(110vw) translateY(-20vh) rotate(-35deg); opacity: 1; }
+            100% { transform: translateX(-50vw) translateY(90vh) rotate(-35deg); opacity: 0; }
+        }
+        .star:nth-child(1) { top: 10%; left: 80%; animation-delay: 0s; }
+        .star:nth-child(2) { top: -10%; left: 50%; animation-delay: 1.5s; }
+        .star:nth-child(3) { top: 30%; left: 100%; animation-delay: 2.8s; }
+        .star:nth-child(4) { top: -5%; left: 120%; animation-delay: 4.1s; }
+        .star:nth-child(5) { top: 50%; left: 110%; animation-delay: 5.5s; }
     </style>
 </head>
 <body class="text-gray-800">
+
+    <div class="shooting-stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div>
+    </div>
 
     <div id="music-prompt">
         <div class="prompt-bounce text-center text-gray-800 bg-white/50 p-10 rounded-3xl shadow-xl border border-white">
@@ -136,10 +184,13 @@
                 <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" alt="Cover" class="w-full h-full object-cover">
             </div>
             <div class="flex justify-center -mt-16 relative z-10">
-                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="profile-anim w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                <div class="relative inline-block profile-anim">
+                    <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                    <div class="shop-status-indicator glow-pulse absolute bottom-1 right-2 w-6 h-6 rounded-full border-[3px] border-white z-20"></div>
+                </div>
             </div>
             
-            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm">
+            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm relative">
                 <h1 class="text-3xl font-bold">Welcome to bebby</h1>
                 <p class="text-gray-600 mt-2">Admin ice / bebby</p>
                 <p class="text-sm mt-3 bg-black text-white inline-block px-5 py-2 rounded-full shadow-md">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
@@ -230,7 +281,10 @@
         </section>
 
         <section id="price" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">Price List <br><span class="text-lg font-normal text-gray-600">รายการสินค้าและราคา</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative">
+                Price List <br><span class="text-lg font-normal text-gray-600">รายการสินค้าและราคา</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full border-2 border-white z-20"></div>
+            </h2>
             <p class="text-center text-sm text-pink-500 mb-4 font-semibold"><i class="fas fa-info-circle"></i> ลองจิ้มที่ราคาสินค้าเพื่อคำนวณยอดรวมที่ตะกร้าด้านขวาบนได้เลย!</p>
             
             <div class="grid md:grid-cols-2 gap-6">
@@ -268,7 +322,10 @@
         </section>
 
         <section id="step" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">ขั้นตอนและกติกา <br><span class="text-lg font-normal text-gray-600">How to order</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative">
+                ขั้นตอนและกติกา <br><span class="text-lg font-normal text-gray-600">How to order</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full border-2 border-white z-20"></div>
+            </h2>
             
             <div class="glass-box p-8 rounded-xl mb-6">
                 <h3 class="text-xl font-bold mb-6 text-red-600"><i class="fas fa-exclamation-circle"></i> โปรดอ่านทุกครั้งก่อนตัดสินใจจ้างงาน</h3>
@@ -292,7 +349,10 @@
         </section>
 
         <section id="example" class="tab-content">
-            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-600">Examples & Portfolio</span></h2>
+            <h2 class="text-3xl font-bold text-center mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative">
+                ตัวอย่างงาน <br><span class="text-lg font-normal text-gray-600">Examples & Portfolio</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full border-2 border-white z-20"></div>
+            </h2>
             
             <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <p class="text-center text-gray-700 col-span-full mt-4 glass-box p-4 rounded-xl"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงานจาก Google Sheets...</p>
@@ -301,7 +361,10 @@
         </section>
 
         <section id="contact" class="tab-content text-center">
-            <h2 class="text-3xl font-bold mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm">Contact Me <br><span class="text-lg font-normal text-gray-600">ช่องทางการติดต่อสั่งงาน</span></h2>
+            <h2 class="text-3xl font-bold mb-8 bg-white/50 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative">
+                Contact Me <br><span class="text-lg font-normal text-gray-600">ช่องทางการติดต่อสั่งงาน</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full border-2 border-white z-20"></div>
+            </h2>
             
             <div class="glass-box p-10 rounded-3xl max-w-md mx-auto">
                 <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-md profile-anim">
@@ -360,6 +423,29 @@
     </nav>
 
     <script>
+        // 🌟 ระบบอัปเดตจุดไฟออนไลน์/ออฟไลน์ อัตโนมัติ 🌟
+        function updateShopStatus() {
+            const now = new Date();
+            const hour = now.getHours();
+            // ออนไลน์ 06:00 - 00:59 (คือ 6 โมงเช้า ถึง เที่ยงคืนกว่าๆ) 
+            // ออฟไลน์ 01:00 - 05:59
+            const isOnline = (hour >= 6 || hour === 0);
+            
+            const statusDots = document.querySelectorAll('.shop-status-indicator');
+            statusDots.forEach(dot => {
+                if (isOnline) {
+                    dot.classList.add('status-online');
+                    dot.classList.remove('status-offline');
+                } else {
+                    dot.classList.add('status-offline');
+                    dot.classList.remove('status-online');
+                }
+            });
+        }
+        updateShopStatus(); // เรียกทำงานทันทีที่โหลดเว็บ
+        setInterval(updateShopStatus, 60000); // เช็คเวลาทุกๆ 1 นาที
+
+        // ตะกร้าสินค้า
         let cartTotal = parseInt(localStorage.getItem('bebbyCartTotal')) || 0;
         updateCartUI();
 
