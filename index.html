@@ -9,17 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 */
-        /* 🌟 ประกาศตัวแปรโทนสีดาร์กโหมด (Dark Theme Palette) */
+        /* 🌟 ประกาศตัวแปรโทนสีดาร์กโหมดตามบรีฟ 🌟 */
         :root {
+            /* โทนพื้นหลัง */
             --bg-main: #0B0D12;    /* ดำอมฟ้า (พื้นหลัก) */
             --bg-card: #1A1D23;    /* เทาดำลึก */
             --bg-border: #2A2E36;  /* เทาเข้ม */
+            /* โทนแสง/เงา */
             --shadow-mid: #3F444D;   /* เทากลาง (พื้นเวที) */
             --shadow-light: #6B7078; /* เทาอ่อน (ไฮไลต์พื้น) */
             --text-muted: #9FA4AA;   /* เทาหม่น (แสงสะท้อน) */
+            /* โทนแสงสปอต (จุดเด่น) */
             --accent-gold: #C9C2A3;  /* ครีมทองหม่น (แสงตกกระทบ) */
             --text-main: #E8DFC2;    /* ครีมอ่อน (ตัวอักษร/ไฮไลต์) */
+            /* โทนตัวละคร (สูท/เงา) */
             --deep-black: #111317;   /* ดำสนิท */
             --deep-gray: #2F333B;    /* เทาดำ (เงาสูท) */
         }
@@ -31,119 +34,154 @@
             color: var(--text-main);
         }
 
-        /* 🌌 🌟 ระบบพื้นหลังท้องฟ้าและดาวตก (Sky & Meteor Effect) */
-        .sky-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: -1; overflow: hidden;
-            background: linear-gradient(to bottom, #0B0D12 0%, #111317 100%);
-        }
-        /* หมู่ดาวกะพริบระยิบระยับ */
-        .stars-static {
-            position: absolute; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(1px 1px at 10% 10%, #fff, transparent),
-                radial-gradient(1px 1px at 20% 50%, var(--accent-gold), transparent),
-                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
-                radial-gradient(1px 1px at 60% 20%, var(--text-muted), transparent),
-                radial-gradient(2px 2px at 80% 40%, #fff, transparent),
-                radial-gradient(1px 1px at 90% 90%, var(--accent-gold), transparent);
-            background-size: 300px 300px;
-            animation: twinkle 5s infinite alternate;
-        }
-        @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
-
-        /* ดาวตกวิ่งตามเนื้อเพลง */
-        .shooting-star {
-            position: absolute; height: 2px;
-            background: linear-gradient(-45deg, var(--accent-gold), rgba(0, 0, 0, 0));
-            filter: drop-shadow(0 0 6px var(--accent-gold));
-            animation: tail 4s ease-in-out infinite, shooting 4s ease-in-out infinite;
-            opacity: 0;
-        }
-        @keyframes tail { 0% { width: 0; } 30% { width: 150px; } 100% { width: 0; } }
-        @keyframes shooting {
-            0% { transform: translateX(0) translateY(0) rotate(35deg); opacity: 0; }
-            10% { opacity: 1; }
-            30% { transform: translateX(-600px) translateY(600px) rotate(35deg); opacity: 0; }
-            100% { transform: translateX(-600px) translateY(600px) rotate(35deg); opacity: 0; }
-        }
-        .s-1 { top: 0%; right: 10%; animation-delay: 0s; }
-        .s-2 { top: 20%; right: -5%; animation-delay: 1.2s; }
-        .s-3 { top: -10%; right: 40%; animation-delay: 2.5s; }
-        .s-4 { top: 50%; right: 0%; animation-delay: 3.8s; }
-        .s-5 { top: 30%; right: 60%; animation-delay: 0.5s; }
-        .s-6 { top: 10%; right: 25%; animation-delay: 5s; }
-
-        /* 📦 📦 Glassmorphism UI */
+        /* Glass Content Box */
         .glass-box {
-            background: rgba(26, 29, 35, 0.85);
+            background: rgba(26, 29, 35, 0.85); /* #1A1D23 แบบโปร่งแสง */
             backdrop-filter: blur(10px);
             border: 1px solid var(--bg-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(11, 13, 18, 0.5); /* เงาโทนดำสนิท */
         }
+
         .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* 3D Folder Glassmorphism */
+        .glass-folder {
+            background: rgba(47, 51, 59, 0.4); /* --deep-gray โปร่งแสง */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--shadow-mid);
+        }
+        
+        .progress-bar { transition: width 1.5s ease-in-out; }
+        
+        .timeline-item { position: relative; padding-left: 30px; margin-bottom: 20px; border-left: 2px solid var(--shadow-mid); }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); }
 
-        .profile-anim { animation: floatProfile 3.5s ease-in-out infinite; }
+        /* ลูกเล่นโปรไฟล์ลอยได้ */
+        .profile-anim {
+            animation: floatProfile 3.5s ease-in-out infinite;
+        }
         @keyframes floatProfile {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-12px) scale(1.05); }
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+            50% { transform: translateY(-12px) scale(1.05) rotate(2deg); }
         }
 
-        /* 📱 📱 Bottom Navbar */
+        /* แถบเมนูด้านล่าง (Bottom Navbar) */
         .bottom-nav {
-            background: rgba(17, 19, 23, 0.95);
+            background: rgba(17, 19, 23, 0.95); /* --deep-black โปร่งแสง */
             backdrop-filter: blur(15px);
             border-top: 1px solid var(--bg-border);
             box-shadow: 0 -5px 25px rgba(0,0,0,0.5);
         }
+        .nav-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .nav-btn:active { transform: scale(0.85); } 
-        .nav-active .nav-img-box { border: 2px solid var(--accent-gold); transform: translateY(-3px); }
+        
+        .nav-img-box {
+            background-color: var(--deep-gray);
+            border-color: transparent;
+        }
+        .nav-active .nav-img-box { border-color: var(--accent-gold); transform: translateY(-3px); }
+        .nav-text { color: var(--shadow-light); }
         .nav-active .nav-text { color: var(--accent-gold); font-weight: 700; }
-        .nav-text { color: var(--text-muted); font-size: 11px; }
 
-        /* 🟢 🔴 จุดออนไลน์/ออฟไลน์ */
-        .status-online { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
-        .status-offline { background-color: #ef4444; box-shadow: 0 0 12px #ef4444; }
-        .glow-pulse { animation: glowPulse 2s infinite alternate; }
-        @keyframes glowPulse { 0% { filter: brightness(1); } 100% { filter: brightness(1.5); } }
-
-        /* 🧸 🫧 ลูกเล่นจิ้มจอ */
+        /* อนิเมชันอีโมจิเวลาจิ้มจอ */
         .emoji-pop {
-            position: fixed; pointer-events: none; font-size: 28px; z-index: 9999;
-            animation: popUp 1s forwards;
+            position: fixed;
+            pointer-events: none;
+            font-size: 28px;
+            z-index: 9999;
+            animation: popUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         @keyframes popUp {
             0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            50% { transform: translate(-50%, -100px) scale(1.2); opacity: 1; }
             100% { transform: translate(-50%, -150px) scale(1); opacity: 0; }
         }
 
-        /* 🛒 ตะกร้าสินค้า */
+        /* ตะกร้าสินค้า */
         #floating-cart {
             position: fixed; top: 20px; right: 20px; z-index: 50;
-            background: var(--accent-gold); color: var(--bg-main); padding: 8px 16px;
-            border-radius: 30px; font-weight: bold; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(201, 194, 163, 0.3);
+            background: var(--accent-gold); color: var(--deep-black); padding: 10px 20px;
+            border-radius: 30px; box-shadow: 0 4px 15px rgba(201, 194, 163, 0.3);
+            font-weight: bold; transition: transform 0.2s; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
         }
-        .price-item { cursor: pointer; transition: 0.2s; }
-        .price-item:hover { background: rgba(201, 194, 163, 0.1); border-radius: 8px; transform: translateX(5px); }
+        #floating-cart:active { transform: scale(0.9); }
+        .price-item { cursor: pointer; transition: all 0.2s; }
+        .price-item:hover { background: rgba(201, 194, 163, 0.1); transform: translateX(5px); padding-left: 10px; border-radius: 8px; }
+
+        /* ป้ายราคา */
+        .badge-price {
+            background-color: var(--deep-gray);
+            color: var(--text-main);
+            border: 1px solid var(--shadow-mid);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* เอฟเฟกต์จุดเรืองแสงออนไลน์/ออฟไลน์ */
+        .status-online {
+            background-color: #22c55e;
+            box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+        }
+        .status-offline {
+            background-color: #ef4444;
+            box-shadow: 0 0 10px #ef4444, 0 0 20px #ef4444;
+        }
+        .glow-pulse { animation: glowPulse 2s infinite alternate; }
+        @keyframes glowPulse {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); }
+        }
+
+        /* เอฟเฟกต์พื้นหลังดาวตก */
+        .shooting-stars {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 3px; height: 3px; background: var(--text-main);
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(232, 223, 194, 0.4), 0 0 15px var(--accent-gold);
+            animation: shoot 4s linear infinite;
+        }
+        .star::before {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 150px; height: 1px;
+            background: linear-gradient(90deg, var(--text-main), transparent);
+        }
+        @keyframes shoot {
+            0% { transform: translateX(110vw) translateY(-20vh) rotate(-35deg); opacity: 1; }
+            100% { transform: translateX(-50vw) translateY(90vh) rotate(-35deg); opacity: 0; }
+        }
+        .star:nth-child(1) { top: 10%; left: 80%; animation-delay: 0s; }
+        .star:nth-child(2) { top: -10%; left: 50%; animation-delay: 1.5s; }
+        .star:nth-child(3) { top: 30%; left: 100%; animation-delay: 2.8s; }
+        .star:nth-child(4) { top: -5%; left: 120%; animation-delay: 4.1s; }
+        .star:nth-child(5) { top: 50%; left: 110%; animation-delay: 5.5s; }
+        
+        /* สไตล์ข้อความทั่วไป */
+        h1, h2, h3, h4 { color: var(--accent-gold); }
+        p, span { color: var(--text-main); }
+        .text-muted { color: var(--text-muted) !important; }
+        .strikethrough-price { color: var(--shadow-light); text-decoration: line-through; }
     </style>
 </head>
 <body>
 
-    <div class="sky-container">
-        <div class="stars-static"></div>
-        <div class="shooting-star s-1"></div>
-        <div class="shooting-star s-2"></div>
-        <div class="shooting-star s-3"></div>
-        <div class="shooting-star s-4"></div>
-        <div class="shooting-star s-5"></div>
-        <div class="shooting-star s-6"></div>
+    <div class="shooting-stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div>
     </div>
 
-    <div id="floating-cart" onclick="clearCart()">
-        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-total-amt">0</span>฿
+    <div id="floating-cart" onclick="clearCart()" title="กดเพื่อล้างยอด">
+        <i class="fa-solid fa-cart-shopping"></i> <span style="color: var(--deep-black);" id="cart-total-amt">0</span>฿
     </div>
 
     <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px;"></div>
@@ -151,201 +189,402 @@
     <div class="pt-8 pb-32 max-w-5xl mx-auto px-4">
 
         <section id="home" class="tab-content active">
-            <div class="relative h-64 rounded-xl overflow-hidden border border-white/5 bg-black">
-                <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" class="w-full h-full object-cover opacity-60">
+            <div class="relative h-64 rounded-xl overflow-hidden shadow-inner border border-[#2A2E36]" style="background-color: var(--deep-black);">
+                <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" alt="Cover" class="w-full h-full object-cover opacity-80">
             </div>
             <div class="flex justify-center -mt-16 relative z-10">
                 <div class="relative inline-block profile-anim">
-                    <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" class="w-32 h-32 rounded-full border-4 border-[#2A2E36] object-cover shadow-2xl">
-                    <div class="shop-status-indicator glow-pulse absolute bottom-1 right-2 w-6 h-6 rounded-full border-4 border-[#2A2E36]"></div>
+                    <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full object-cover shadow-lg" style="border: 4px solid var(--bg-border);">
+                    <div class="shop-status-indicator glow-pulse absolute bottom-1 right-2 w-6 h-6 rounded-full z-20" style="border: 3px solid var(--bg-border);"></div>
                 </div>
             </div>
             
-            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm">
-                <h1 class="text-3xl font-bold" style="color: var(--accent-gold);">Welcome to bebby</h1>
-                <p class="text-gray-400 mt-2">Admin ice / bebby</p>
-                <p class="text-sm mt-3 px-5 py-2 rounded-full border border-white/10" style="background: var(--deep-gray); color: var(--accent-gold);">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
+            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm relative">
+                <h1 class="text-3xl font-bold">Welcome to bebby</h1>
+                <p class="text-muted mt-2">Admin ice / bebby</p>
+                <p class="text-sm mt-3 inline-block px-5 py-2 rounded-full shadow-md" style="background-color: var(--deep-gray); color: var(--accent-gold); border: 1px solid var(--shadow-mid);">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
             </div>
 
-            <div class="glass-box p-6 rounded-xl mb-8 space-y-3 text-gray-300">
-                <p>🐈‍⬛ 𓏔 line : <b class="text-white">@741eynzz</b> (มี@)</p>
+            <div class="glass-box p-6 rounded-xl mb-8 space-y-3 text-sm md:text-base text-muted">
+                <p>🐈‍⬛ 𓏔 line : <b style="color: var(--text-main);">@741eynzz</b> (มี@)</p>
                 <p>𓈒 —🐈‍⬛ งานป้ายเริ่มต้น 49 - 599฿ มีราคาเหมา 3 ป้ายขึ้นไป ┊</p>
                 <p>⏳ รองาน 1 - 14 วันตามคิว ( สอบถามคิวงานก่อนได้ค่ะ )</p>
                 <p>📓 คิดราคาตามรายละเอียดของงาน ปรึกษาได้น้า 💡🧸</p>
-                <p>📁 : <b class="text-white">ส่งงานผ่าน Google Drive เท่านั้น !</b></p>
+                <p>📁 : <b style="color: var(--text-main);">ส่งงานผ่าน Google Drive เท่านั้น !</b></p>
                 <p>✅ : บรีฟงานได้ทุกอย่าง ข้อมูลลูกค้าต้องพกเตรียมมาเอง</p>
             </div>
 
-            <div class="glass-box p-6 rounded-2xl mb-10">
-                <h2 class="text-xl font-bold mb-6 text-center" style="color: var(--accent-gold);">Hard Skills</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-white italic">C</div>
-                        <div class="flex-1">
-                            <p class="text-xs mb-1">Canva</p>
-                            <div class="w-full bg-black/40 h-1.5 rounded-full"><div class="h-1.5 rounded-full" style="width: 100%; background: var(--accent-gold);"></div></div>
+            <div class="grid md:grid-cols-2 gap-8 mb-10">
+                <a href="https://drive.google.com/drive/folders/1x3qtzrZDN9xQmhgP2O4LZGkTSUWg92kG" target="_blank" class="block group">
+                    <div class="relative h-64 glass-box rounded-2xl p-6 flex flex-col justify-center items-center transition-transform transform hover:scale-105">
+                        <div class="w-32 h-24 rounded-lg relative shadow-xl" style="background-color: var(--deep-gray);">
+                            <div class="absolute w-28 h-20 left-2 -top-4 rounded flex flex-col gap-2 p-2 shadow-sm border" style="background-color: var(--shadow-mid); border-color: var(--shadow-light);">
+                                <div class="w-full h-1 rounded" style="background-color: var(--shadow-light);"></div>
+                                <div class="w-3/4 h-1 rounded" style="background-color: var(--shadow-light);"></div>
+                                <div class="w-5/6 h-1 rounded" style="background-color: var(--shadow-light);"></div>
+                            </div>
+                            <div class="absolute w-full h-20 bottom-0 left-0 glass-folder rounded-b-lg flex items-center justify-center">
+                                <i class="fa-brands fa-google-drive text-3xl opacity-80" style="color: var(--text-main);"></i>
+                            </div>
                         </div>
+                        <p class="mt-8 font-semibold text-muted group-hover:text-white" style="transition: 0.3s;">คลิกเพื่อดู Google Drive</p>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-lg bg-black border border-white/20 flex items-center justify-center"><i class="fa-solid fa-scissors text-white"></i></div>
-                        <div class="flex-1">
-                            <p class="text-xs mb-1">CapCut</p>
-                            <div class="w-full bg-black/40 h-1.5 rounded-full"><div class="h-1.5 rounded-full" style="width: 90%; background: var(--accent-gold);"></div></div>
+                </a>
+
+                <div class="glass-box p-6 rounded-2xl flex flex-col justify-center">
+                    <h2 class="text-xl font-bold mb-6 text-center">Hard Skills</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-600 to-purple-700 flex items-center justify-center shadow-sm flex-shrink-0">
+                                <b class="text-white font-serif text-xl italic">C</b>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Canva</p>
+                                <div class="w-full h-2 rounded-full mt-1" style="background-color: var(--bg-border);"><div class="h-2 rounded-full progress-bar" style="width: 100%; background-color: var(--accent-gold);"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0" style="background-color: var(--deep-black); border: 1px solid var(--shadow-mid);">
+                                <i class="fa-solid fa-scissors text-white text-lg transform -rotate-90"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">CapCut</p>
+                                <div class="w-full h-2 rounded-full mt-1" style="background-color: var(--bg-border);"><div class="h-2 rounded-full progress-bar" style="width: 90%; background-color: var(--accent-gold);"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center shadow-sm flex-shrink-0 border" style="border-color: var(--shadow-light);">
+                                <i class="fa-solid fa-palette text-white text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">ibis Paint</p>
+                                <div class="w-full h-2 rounded-full mt-1" style="background-color: var(--bg-border);"><div class="h-2 rounded-full progress-bar" style="width: 80%; background-color: var(--accent-gold);"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0 border" style="background-color: #1a1a1a; border-color: var(--shadow-mid);">
+                                <i class="fa-solid fa-pen-fancy text-white text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Procreate</p>
+                                <div class="w-full h-2 rounded-full mt-1" style="background-color: var(--bg-border);"><div class="h-2 rounded-full progress-bar" style="width: 75%; background-color: var(--accent-gold);"></div></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-red-800 flex items-center justify-center shadow-sm flex-shrink-0 border" style="border-color: var(--shadow-mid);">
+                                <i class="fa-solid fa-pen-nib text-white text-lg"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold">Clip Studio Paint</p>
+                                <div class="w-full h-2 rounded-full mt-1" style="background-color: var(--bg-border);"><div class="h-2 rounded-full progress-bar" style="width: 40%; background-color: var(--accent-gold);"></div></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4">
-                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="rounded-xl border border-white/10 shadow-lg">
-                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="rounded-xl border border-white/10 shadow-lg">
+            <div class="grid md:grid-cols-2 gap-4 mb-10">
+                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="w-full h-auto rounded-2xl shadow-md object-cover" style="border: 2px solid var(--shadow-mid);" alt="Image 1">
+                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="w-full h-auto rounded-2xl shadow-md object-cover" style="border: 2px solid var(--shadow-mid);" alt="Image 2">
             </div>
         </section>
 
         <section id="price" class="tab-content">
-            <div class="text-center mb-10 relative">
-                <h2 class="text-3xl font-bold inline-block px-8 py-3 rounded-full glass-box relative">
-                    Price List
-                    <div class="shop-status-indicator glow-pulse absolute -top-1 -right-1 w-5 h-5 rounded-full border-2 border-white/20"></div>
-                </h2>
-            </div>
+            <h2 class="text-3xl font-bold text-center mb-8 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative border" style="background-color: var(--bg-border); border-color: var(--shadow-mid);">
+                Price List <br><span class="text-lg font-normal text-muted">รายการสินค้าและราคา</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full z-20" style="border: 2px solid var(--bg-border);"></div>
+            </h2>
+            <p class="text-center text-sm mb-4 font-semibold" style="color: var(--accent-gold);"><i class="fas fa-info-circle"></i> ลองจิ้มที่ราคาสินค้าเพื่อคำนวณยอดรวมที่ตะกร้าด้านขวาบนได้เลย!</p>
+            
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="glass-box p-6 rounded-2xl">
-                    <h3 class="font-bold border-b border-white/10 pb-2 mb-4">งานออกแบบ</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(99)"><span>บล็อก</span> <span style="color: var(--accent-gold);">99฿</span></div>
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(45)"><span>แนวสว่าง / เรียบ</span> <span style="color: var(--accent-gold);">45฿</span></div>
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(59)"><span>แนวกึ่ง ads.</span> <span style="color: var(--accent-gold);">59฿</span></div>
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(49)"><span>งานป้าย</span> <span style="color: var(--accent-gold);">49฿</span></div>
-                    </div>
+                <div class="glass-box p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 pb-2" style="border-bottom: 1px solid var(--shadow-mid);">งานออกแบบทั่วไป</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(99)"><span>บล็อก</span> <span class="badge-price">99฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(45)"><span>แนวสว่าง / แนวเรียบ</span> <span class="badge-price">45฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(59)"><span>แนวกึ่ง ads.</span> <span class="badge-price">59฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(49)"><span>งานป้าย</span> <span class="badge-price">49฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(99)"><span>Set ปกกลุ่ม + กรอบ</span> <span class="badge-price">99฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(70)"><span>ป้ายเรท</span> <span class="badge-price">70฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(89)"><span>บัตรสะสมแต้ม</span> <span class="badge-price">89฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(100)"><span>ริชเมนู (ใหญ่)</span> <span class="badge-price">100฿</span></li>
+                    </ul>
                 </div>
-                <div class="glass-box p-6 rounded-2xl">
-                    <h3 class="font-bold border-b border-white/10 pb-2 mb-4">โปรโมชั่น ลายน้ำ</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(240)"><span>10 งาน (สีสัน)</span> <span><s class="text-xs text-gray-500">250</s> <span style="color: var(--accent-gold);">240฿</span></span></div>
-                        <div class="flex justify-between price-item p-2" onclick="addToCart(145)"><span>10 งาน (ขาวดำ)</span> <span><s class="text-xs text-gray-500">150</s> <span style="color: var(--accent-gold);">145฿</span></span></div>
-                    </div>
+
+                <div class="glass-box p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-4 pb-2" style="border-bottom: 1px solid var(--shadow-mid);">โปรโมชั่น ลายน้ำ</h3>
+                    
+                    <h4 class="font-semibold mt-2" style="color: var(--accent-gold);">✨ แบบสีสัน</h4>
+                    <ul class="space-y-3 text-sm mt-2 mb-4">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(125)"><span>5 งาน</span> <span class="badge-price">125฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(240)"><span>10 งาน (ลด 10฿)</span> <span><span class="strikethrough-price text-xs">250฿</span> <span class="badge-price">240฿</span></span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(360)"><span>15 งาน (ลด 15฿)</span> <span><span class="strikethrough-price text-xs">375฿</span> <span class="badge-price">360฿</span></span></li>
+                    </ul>
+
+                    <h4 class="font-semibold pt-3" style="border-top: 1px solid var(--shadow-mid); color: var(--accent-gold);">แบบสีขาว-ดำ</h4>
+                    <ul class="space-y-3 text-sm mt-2">
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(75)"><span>5 งาน</span> <span class="badge-price">75฿</span></li>
+                        <li class="flex justify-between items-center price-item" onclick="addToCart(145)"><span>10 งาน (ลด 5฿)</span> <span><span class="strikethrough-price text-xs">150฿</span> <span class="badge-price">145฿</span></span></li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="step" class="tab-content">
-            <h2 class="text-2xl font-bold text-center mb-8" style="color: var(--accent-gold);">How to order</h2>
-            <div class="glass-box p-8 rounded-3xl space-y-6">
-                <div class="timeline-item"><p class="text-white font-bold">1. บรีฟงานและสรุปยอด</p></div>
-                <div class="timeline-item"><p class="text-white font-bold">2. โอนจองคิว (100% หรือ 50% สำหรับ 300฿+)</p></div>
-                <div class="timeline-item"><p class="text-white font-bold">3. รองาน 5-12 วัน (ห้ามยกเลิก/คืนเงิน)</p></div>
+            <h2 class="text-3xl font-bold text-center mb-8 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative border" style="background-color: var(--bg-border); border-color: var(--shadow-mid);">
+                ขั้นตอนและกติกา <br><span class="text-lg font-normal text-muted">How to order</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full z-20" style="border: 2px solid var(--bg-border);"></div>
+            </h2>
+            
+            <div class="glass-box p-8 rounded-xl mb-6">
+                <h3 class="text-xl font-bold mb-6" style="color: var(--accent-gold);"><i class="fas fa-exclamation-circle"></i> โปรดอ่านทุกครั้งก่อนตัดสินใจจ้างงาน</h3>
+                
+                <div class="timeline-item">
+                    <h4 class="font-bold">1. การบรีฟและสรุปงาน</h4>
+                    <p class="text-sm mt-1 text-muted">เมื่อจ้างงานกับทางร้าน จะมีสรุปงานหลังจากที่ลูกค้าแจ้งเรียบร้อย หากมีการเพิ่มเติมหลังงานเสร็จ อาจมี + เพิ่ม</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-bold">2. กติกาการโอนเงิน (โอน = จองคิว)</h4>
+                    <p class="text-sm mt-1 text-muted">
+                        <b style="color: var(--text-main);">โอน 100%:</b> โอนเต็มจำนวน<br>
+                        <b style="color: var(--text-main);">โอน 50%:</b> (ยอด 300.- ขึ้นไป) ไม่มีการอัพเดทงานระหว่างทำ จะโอนครบก่อนส่งงาน
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="font-bold">3. การยกเลิกงาน</h4>
+                    <p class="text-sm mt-1 text-muted"><b style="color: var(--text-main);">ทางร้านขอสงวนสิทธิ์ไม่คืนเงินทุกกรณี</b> ไม่รับทำก่อนโอนไม่ว่ากรณีใดๆทั้งสิ้น</p>
+                </div>
             </div>
         </section>
 
         <section id="example" class="tab-content">
-            <h2 class="text-2xl font-bold text-center mb-8" style="color: var(--accent-gold);">Examples</h2>
+            <h2 class="text-3xl font-bold text-center mb-8 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative border" style="background-color: var(--bg-border); border-color: var(--shadow-mid);">
+                ตัวอย่างงาน <br><span class="text-lg font-normal text-muted">Examples & Portfolio</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full z-20" style="border: 2px solid var(--bg-border);"></div>
+            </h2>
+            
             <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <p class="col-span-full text-center text-gray-500">กำลังดึงข้อมูลจากดวงดาว...</p>
+                <p class="text-center col-span-full mt-4 glass-box p-4 rounded-xl text-muted"><i class="fas fa-spinner fa-spin mr-2"></i> กำลังโหลดผลงานจาก Google Sheets...</p>
             </div>
+            <p class="text-center mt-6 text-sm inline-block px-4 py-1 rounded-full text-muted" style="background-color: var(--deep-gray); border: 1px solid var(--shadow-mid);">สามารถดูผลงานเพิ่มเติมได้ทาง Google Drive หรือสอบถามทางไลน์</p>
         </section>
 
         <section id="contact" class="tab-content text-center">
-            <div class="glass-box p-10 rounded-3xl max-w-md mx-auto">
-                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-white/20 profile-anim">
-                <h3 class="text-xl font-bold mb-6">Admin Ice / Bebby</h3>
-                <a href="https://line.me/ti/p/~@741eynzz" class="block w-full bg-[#00B900] text-black font-bold py-4 rounded-2xl transition hover:scale-105">
-                    <i class="fa-brands fa-line mr-2"></i> LINE: @741eynzz
+            <h2 class="text-3xl font-bold mb-8 inline-block px-8 py-2 rounded-full mx-auto shadow-sm relative border" style="background-color: var(--bg-border); border-color: var(--shadow-mid);">
+                Contact Me <br><span class="text-lg font-normal text-muted">ช่องทางการติดต่อสั่งงาน</span>
+                <div class="shop-status-indicator glow-pulse absolute top-1 right-2 w-5 h-5 rounded-full z-20" style="border: 2px solid var(--bg-border);"></div>
+            </h2>
+            
+            <div class="glass-box p-10 rounded-3xl max-w-md mx-auto relative overflow-hidden">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" alt="Profile" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-md profile-anim relative z-10" style="border: 4px solid var(--bg-border);">
+                <h3 class="text-2xl font-bold relative z-10">Admin Ice / Bebby</h3>
+                <p class="text-sm mb-8 relative z-10 text-muted">ตอบแชทไว สอบถามคิวงานได้เลยค่ะ</p>
+                
+                <a href="https://line.me/ti/p/~@741eynzz" target="_blank" class="block w-full bg-[#00B900] hover:bg-green-600 font-bold py-4 px-4 rounded-2xl transition transform hover:scale-105 shadow-lg relative z-10" style="color: var(--deep-black);">
+                    <i class="fa-brands fa-line text-2xl mr-2 align-middle"></i> ทัก LINE: @741eynzz
                 </a>
             </div>
         </section>
+
     </div>
 
-    <nav class="bottom-nav fixed bottom-0 left-0 w-full z-40 rounded-t-3xl">
-        <div class="max-w-md mx-auto px-6 py-3 flex justify-between">
-            <button onclick="changeTab('home')" class="nav-btn nav-active" data-target="home">
-                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/xTkrBDvX/243C55CD-5DC1-430F-B431-80DD3C372D32.gif" class="w-full h-full object-cover"></div>
-                <p class="nav-text">Home</p>
-            </button>
-            <button onclick="changeTab('price')" class="nav-btn" data-target="price">
-                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/7Z7FY3tm/40A87F10-070D-4ECF-9D9D-E4D3D4F50EF2.gif" class="w-full h-full object-cover"></div>
-                <p class="nav-text">Price</p>
-            </button>
-            <button onclick="changeTab('step')" class="nav-btn" data-target="step">
-                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/JzJf4NYK/A2202418-9842-4824-A3CC-ACA699743ED3.gif" class="w-full h-full object-cover"></div>
-                <p class="nav-text">Step</p>
-            </button>
-            <button onclick="changeTab('example')" class="nav-btn" data-target="example">
-                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/dVdbt2N9/C0030FE7-E1E0-424F-824F-488AAB8FFBC3.gif" class="w-full h-full object-cover"></div>
-                <p class="nav-text">Example</p>
-            </button>
-            <button onclick="changeTab('contact')" class="nav-btn" data-target="contact">
-                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/XYFR7fDb/F457A68B-6E08-44FE-B97B-3A8B84BB1F2E.gif" class="w-full h-full object-cover"></div>
-                <p class="nav-text">Contact</p>
-            </button>
+    <nav class="bottom-nav fixed bottom-0 left-0 w-full z-40 rounded-t-3xl pb-safe">
+        <div class="max-w-md mx-auto px-6 py-2">
+            <div class="flex justify-between items-center text-[11px] md:text-xs">
+                
+                <button onclick="changeTab('home')" class="nav-btn nav-active flex flex-col items-center gap-1" data-target="home">
+                    <div class="p-1 rounded-full border-2 transition-all nav-img-box">
+                        <img src="https://i.postimg.cc/xTkrBDvX/243C55CD-5DC1-430F-B431-80DD3C372D32.gif" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    </div>
+                    <span class="nav-text">Home</span>
+                </button>
+
+                <button onclick="changeTab('price')" class="nav-btn flex flex-col items-center gap-1" data-target="price">
+                    <div class="p-1 rounded-full border-2 transition-all nav-img-box">
+                        <img src="https://i.postimg.cc/7Z7FY3tm/40A87F10-070D-4ECF-9D9D-E4D3D4F50EF2.gif" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    </div>
+                    <span class="nav-text">Price</span>
+                </button>
+
+                <button onclick="changeTab('step')" class="nav-btn flex flex-col items-center gap-1" data-target="step">
+                    <div class="p-1 rounded-full border-2 transition-all nav-img-box">
+                        <img src="https://i.postimg.cc/JzJf4NYK/A2202418-9842-4824-A3CC-ACA699743ED3.gif" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    </div>
+                    <span class="nav-text">Step</span>
+                </button>
+
+                <button onclick="changeTab('example')" class="nav-btn flex flex-col items-center gap-1" data-target="example">
+                    <div class="p-1 rounded-full border-2 transition-all nav-img-box">
+                        <img src="https://i.postimg.cc/dVdbt2N9/C0030FE7-E1E0-424F-824F-488AAB8FFBC3.gif" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    </div>
+                    <span class="nav-text">Example</span>
+                </button>
+
+                <button onclick="changeTab('contact')" class="nav-btn flex flex-col items-center gap-1" data-target="contact">
+                    <div class="p-1 rounded-full border-2 transition-all nav-img-box">
+                        <img src="https://i.postimg.cc/XYFR7fDb/F457A68B-6E08-44FE-B97B-3A8B84BB1F2E.gif" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    </div>
+                    <span class="nav-text">Contact</span>
+                </button>
+
+            </div>
         </div>
     </nav>
 
     <script>
-        // 1. สถานะเปิดร้านอัตโนมัติ (6:00 - 0:59)
         function updateShopStatus() {
-            const hour = new Date().getHours();
+            const now = new Date();
+            const hour = now.getHours();
             const isOnline = (hour >= 6 || hour === 0);
-            document.querySelectorAll('.shop-status-indicator').forEach(dot => {
-                dot.className = `shop-status-indicator glow-pulse absolute ${dot.classList.contains('bottom-1') ? 'bottom-1 right-2 w-6 h-6' : '-top-1 -right-1 w-5 h-5'} rounded-full ${isOnline ? 'status-online' : 'status-offline'}`;
+            
+            const statusDots = document.querySelectorAll('.shop-status-indicator');
+            statusDots.forEach(dot => {
+                if (isOnline) {
+                    dot.classList.add('status-online');
+                    dot.classList.remove('status-offline');
+                } else {
+                    dot.classList.add('status-offline');
+                    dot.classList.remove('status-online');
+                }
             });
         }
-        updateShopStatus(); setInterval(updateShopStatus, 60000);
+        updateShopStatus(); 
+        setInterval(updateShopStatus, 60000); 
 
-        // 2. ตะกร้าสินค้า
-        let cartTotal = 0;
-        function addToCart(price) { cartTotal += price; document.getElementById('cart-total-amt').innerText = cartTotal; }
-        function clearCart() { if(confirm("ล้างยอด?")) { cartTotal = 0; document.getElementById('cart-total-amt').innerText = 0; } }
+        let cartTotal = parseInt(localStorage.getItem('bebbyCartTotal')) || 0;
+        updateCartUI();
 
-        // 3. เปลี่ยนแท็บ
+        function addToCart(price) {
+            cartTotal += price;
+            localStorage.setItem('bebbyCartTotal', cartTotal);
+            updateCartUI();
+            
+            const span = document.createElement('span');
+            span.className = 'emoji-pop';
+            span.innerText = '🛍️';
+            span.style.left = '50%';
+            span.style.top = '50%';
+            document.body.appendChild(span);
+            setTimeout(() => span.remove(), 1000);
+        }
+
+        function clearCart() {
+            if(confirm("ต้องการล้างยอดรวมสินค้าใช่หรือไม่?")) {
+                cartTotal = 0;
+                localStorage.setItem('bebbyCartTotal', 0);
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-total-amt').innerText = cartTotal;
+        }
+
         function changeTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('nav-active'));
+            
             document.getElementById(tabId).classList.add('active');
-            document.querySelector(`[data-target="${tabId}"]`).classList.add('nav-active');
+            document.querySelector(`.nav-btn[data-target="${tabId}"]`).classList.add('nav-active');
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 4. YouTube Autoplay
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
-                height: '1', width: '1', videoId: 'FbrH6dDPERI',
-                playerVars: { autoplay: 1, loop: 1, playlist: 'FbrH6dDPERI', playsinline: 1 },
-                events: { 'onReady': e => { e.target.setVolume(100); e.target.playVideo(); } }
+                height: '1', width: '1',
+                videoId: 'FbrH6dDPERI',
+                playerVars: {
+                    autoplay: 1, 
+                    loop: 1, 
+                    controls: 0,
+                    mute: 0,
+                    playsinline: 1,
+                    playlist: 'FbrH6dDPERI'
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
             });
         }
-        var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(tag);
-        // ปลุกเพลงเมื่อมีการจิ้มจอครั้งแรก (กันบล็อกเสียง)
-        document.body.addEventListener('click', () => { if(player) player.playVideo(); }, {once:true});
+        
+        function onPlayerReady(event) {
+            event.target.setVolume(100);
+            event.target.playVideo();
+        }
 
-        // 5. ลูกเล่นจิ้มจอ
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function tryPlayAudio() {
+            if (player && typeof player.playVideo === 'function') {
+                if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.unMute();
+                    player.playVideo();
+                }
+            }
+        }
+        document.body.addEventListener('click', tryPlayAudio, { once: true });
+        document.body.addEventListener('touchstart', tryPlayAudio, { once: true, passive: true });
+
         const emojis = ['🧸', '🫧', '👑', '🌥️', '🍄', '⭐️', '🩷'];
-        document.addEventListener('click', e => {
+        document.addEventListener('click', function(e) {
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
             const span = document.createElement('span');
             span.className = 'emoji-pop';
-            span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-            span.style.left = e.clientX + 'px'; span.style.top = e.clientY + 'px';
+            span.innerText = randomEmoji;
+            span.style.left = e.clientX + 'px';
+            span.style.top = e.clientY + 'px';
             document.body.appendChild(span);
             setTimeout(() => span.remove(), 1000);
         });
 
-        // 6. ดึงข้อมูล Google Sheets
         async function loadPortfolio() {
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv'; 
             try {
-                const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv');
-                const data = await res.text();
-                const rows = data.split('\n').slice(1);
-                let html = '';
+                const response = await fetch(sheetUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); 
+                let htmlContent = '';
+                
                 rows.forEach(row => {
-                    const parts = row.split(',');
-                    const url = parts[0].replace(/["\r]/g, '').trim();
-                    const title = parts[1]?.replace(/["\r]/g, '').trim() || '';
-                    if(url) html += `<div class="glass-box rounded-xl overflow-hidden h-48"><img src="${url}" class="w-full h-full object-cover transition hover:scale-110"><p class="text-[10px] p-1 text-center">${title}</p></div>`;
+                    const firstComma = row.indexOf(','); 
+                    if (firstComma > 0) {
+                        let rawUrl = row.substring(0, firstComma).replace(/["\r]/g, '').trim();
+                        let finalUrl = rawUrl;
+                        
+                        const srcMatch = rawUrl.match(/src=['"]([^'"]+)['"]/i);
+                        if (srcMatch) finalUrl = srcMatch[1];
+                        else {
+                            const bbcodeMatch = rawUrl.match(/\[img\](.*?)\[\/img\]/i);
+                            if (bbcodeMatch) finalUrl = bbcodeMatch[1];
+                        }
+
+                        const title = row.substring(firstComma + 1).replace(/["\r]/g, '').trim();
+                        
+                        if (finalUrl !== '') {
+                            htmlContent += `
+                            <div class="relative group rounded-2xl overflow-hidden shadow-md h-48 md:h-64 bg-white" style="border: 2px solid var(--shadow-mid);">
+                                <img src="${finalUrl}" class="w-full h-full object-cover transition transform duration-500 group-hover:scale-110" alt="Work" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Error'">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent pt-8 pb-2 px-2 text-center text-sm font-bold text-white opacity-0 group-hover:opacity-100 transition duration-300 z-10">${title}</div>
+                            </div>`;
+                        }
+                    }
                 });
-                document.getElementById('portfolio-gallery').innerHTML = html || 'ยังไม่มีข้อมูล';
-            } catch { document.getElementById('portfolio-gallery').innerHTML = 'โหลดล้มเหลว'; }
+                
+                if(htmlContent !== '') {
+                    document.getElementById('portfolio-gallery').innerHTML = htmlContent;
+                } else {
+                    document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center text-muted col-span-full glass-box p-4 rounded-xl z-10">ยังไม่มีผลงานในระบบ</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('portfolio-gallery').innerHTML = '<p class="text-center col-span-full glass-box p-4 rounded-xl z-10" style="color: #ef4444;">ไม่สามารถเชื่อมต่อฐานข้อมูลได้</p>';
+            }
         }
         loadPortfolio();
     </script>
