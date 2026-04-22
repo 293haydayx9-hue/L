@@ -61,25 +61,6 @@
         .nav-active .nav-img-box { border-color: #000; transform: translateY(-3px); }
         .nav-active .nav-text { color: #000; font-weight: 700; }
 
-        #music-prompt {
-            position: fixed;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.5s ease, visibility 0.5s;
-        }
-        .prompt-bounce { animation: bouncePrompt 2s infinite; }
-        @keyframes bouncePrompt {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
         .emoji-pop {
             position: fixed;
             pointer-events: none;
@@ -150,14 +131,6 @@
     <div class="shooting-stars">
         <div class="star"></div><div class="star"></div><div class="star"></div>
         <div class="star"></div><div class="star"></div>
-    </div>
-
-    <div id="music-prompt">
-        <div class="prompt-bounce text-center text-gray-800 bg-white/50 p-10 rounded-3xl shadow-xl border border-white">
-            <i class="fa-solid fa-hand-pointer text-6xl mb-6 text-pink-400"></i>
-            <h2 class="text-3xl font-bold mb-2">แตะหน้าจอ 1 ครั้ง</h2>
-            <p class="text-lg text-gray-600">เพื่อปลุกความน่ารัก และเล่นเพลง 🎶</p>
-        </div>
     </div>
 
     <div id="floating-cart" onclick="clearCart()" title="กดเพื่อล้างยอด">
@@ -412,7 +385,6 @@
     </nav>
 
     <script>
-        // 🌟 ระบบอัปเดตจุดไฟออนไลน์/ออฟไลน์ อัตโนมัติ 🌟
         function updateShopStatus() {
             const now = new Date();
             const hour = now.getHours();
@@ -471,18 +443,18 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 🌟 ตั้งค่า YouTube ให้เสียงออก 100%
+        // 🌟 ตั้งค่า YouTube Autoplay แบบ 100% ไร้ป๊อปอัป
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('yt-player', {
-                height: '1', width: '1', // เปลี่ยนจาก 0 เป็น 1 ป้องกันเบราว์เซอร์บางตัวบล็อก
+                height: '1', width: '1',
                 videoId: 'FbrH6dDPERI',
                 playerVars: {
-                    autoplay: 0, 
+                    autoplay: 1, // บังคับออโต้เพลย์ทันที
                     loop: 1, 
                     controls: 0,
                     mute: 0,
-                    playsinline: 1, // สำคัญมากสำหรับมือถือ iOS (ไม่ให้เด้งเต็มจอ)
+                    playsinline: 1,
                     playlist: 'FbrH6dDPERI'
                 },
                 events: {
@@ -492,9 +464,8 @@
         }
         
         function onPlayerReady(event) {
-            // มั่นใจว่าไม่ได้ถูก Mute และเร่งเสียงสุดเมื่อโหลดเสร็จ
-            event.target.unMute();
             event.target.setVolume(100);
+            event.target.playVideo(); // สั่งรันอีกรอบทันทีที่โหลดเสร็จ
         }
 
         var tag = document.createElement('script');
@@ -502,23 +473,18 @@
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        let hasStarted = false;
-        document.body.addEventListener('click', function(e) {
-            if (!hasStarted) {
-                const promptEl = document.getElementById('music-prompt');
-                if(promptEl) {
-                    promptEl.style.opacity = '0';
-                    setTimeout(() => promptEl.style.display = 'none', 500); 
-                }
-                hasStarted = true;
-                
-                // ตรวจสอบและสั่งเล่นเพลง
-                if (player && typeof player.playVideo === 'function') {
-                    player.unMute(); // กันเหนียวสำหรับบางเบราว์เซอร์
+        // 🌟 ระบบเนียนๆ เผื่อกรณี iOS/Chrome มือถือบล็อกเสียงตอนเข้าเว็บครั้งแรก 
+        // แค่ลูกค้าใช้นิ้วแตะจอเลื่อนดู หรือกดเมนูอะไรก็ตาม เพลงจะดังทันทีโดยไม่มีป๊อปอัปมากวน
+        function tryPlayAudio() {
+            if (player && typeof player.playVideo === 'function') {
+                if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                    player.unMute();
                     player.playVideo();
                 }
             }
-        });
+        }
+        document.body.addEventListener('click', tryPlayAudio, { once: true });
+        document.body.addEventListener('touchstart', tryPlayAudio, { once: true, passive: true });
 
         const emojis = ['🧸', '🫧', '👑', '🌥️', '🍄', '⭐️', '🩷'];
         document.addEventListener('click', function(e) {
