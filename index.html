@@ -1,16 +1,27 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bebby - Portfolio & Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* (ประกาศตัวแปรโทนสีเดิมคงไว้...) */
+        /* 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 🌑 */
+        /* 🌟 ประกาศตัวแปรโทนสีดาร์กโหมด (Dark Theme Palette) */
         :root {
-            --bg-main: #0B0D12; 
-            --bg-card: #1A1D23;
-            --bg-border: #2A2E36;
-            --shadow-mid: #3F444D;
-            --shadow-light: #6B7078;
-            --text-muted: #9FA4AA;
-            --accent-gold: #C9C2A3;
-            --text-main: #E8DFC2;
-            --deep-black: #111317;
-            --deep-gray: #2F333B;
+            --bg-main: #0B0D12;    /* ดำอมฟ้า (พื้นหลัก) */
+            --bg-card: #1A1D23;    /* เทาดำลึก */
+            --bg-border: #2A2E36;  /* เทาเข้ม */
+            --shadow-mid: #3F444D;   /* เทากลาง (พื้นเวที) */
+            --shadow-light: #6B7078; /* เทาอ่อน (ไฮไลต์พื้น) */
+            --text-muted: #9FA4AA;   /* เทาหม่น (แสงสะท้อน) */
+            --accent-gold: #C9C2A3;  /* ครีมทองหม่น (แสงตกกระทบ) */
+            --text-main: #E8DFC2;    /* ครีมอ่อน (ตัวอักษร/ไฮไลต์) */
+            --deep-black: #111317;   /* ดำสนิท */
+            --deep-gray: #2F333B;    /* เทาดำ (เงาสูท) */
         }
 
         body { 
@@ -18,20 +29,15 @@
             overflow-x: hidden; 
             background-color: var(--bg-main); 
             color: var(--text-main);
-            /* เพิ่มเอฟเฟกต์หมอกดาวจางๆ */
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(63, 68, 77, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(201, 194, 163, 0.05) 0%, transparent 40%);
         }
 
-        /* 🌟 ปรับปรุงพื้นหลังดาวและดาวตก 🌟 */
+        /* 🌌 🌟 ระบบพื้นหลังท้องฟ้าและดาวตก (Sky & Meteor Effect) */
         .sky-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -1; overflow: hidden;
             background: linear-gradient(to bottom, #0B0D12 0%, #111317 100%);
         }
-
-        /* หมู่ดาวกะพริบ */
+        /* หมู่ดาวกะพริบระยิบระยับ */
         .stars-static {
             position: absolute; width: 100%; height: 100%;
             background-image: 
@@ -44,36 +50,23 @@
             background-size: 300px 300px;
             animation: twinkle 5s infinite alternate;
         }
+        @keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 0.8; } }
 
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
-        }
-
-        /* ปรับปรุงดาวตกให้เห็นชัดและมากขึ้น */
+        /* ดาวตกวิ่งตามเนื้อเพลง */
         .shooting-star {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(-45deg, var(--accent-gold), rgba(0, 0, 255, 0));
+            position: absolute; height: 2px;
+            background: linear-gradient(-45deg, var(--accent-gold), rgba(0, 0, 0, 0));
             filter: drop-shadow(0 0 6px var(--accent-gold));
             animation: tail 4s ease-in-out infinite, shooting 4s ease-in-out infinite;
             opacity: 0;
         }
-
-        @keyframes tail {
-            0% { width: 0; }
-            30% { width: 150px; }
-            100% { width: 0; }
-        }
-
+        @keyframes tail { 0% { width: 0; } 30% { width: 150px; } 100% { width: 0; } }
         @keyframes shooting {
             0% { transform: translateX(0) translateY(0) rotate(35deg); opacity: 0; }
             10% { opacity: 1; }
             30% { transform: translateX(-600px) translateY(600px) rotate(35deg); opacity: 0; }
             100% { transform: translateX(-600px) translateY(600px) rotate(35deg); opacity: 0; }
         }
-
-        /* ตำแหน่งดาวตกต่างๆ */
         .s-1 { top: 0%; right: 10%; animation-delay: 0s; }
         .s-2 { top: 20%; right: -5%; animation-delay: 1.2s; }
         .s-3 { top: -10%; right: 40%; animation-delay: 2.5s; }
@@ -81,14 +74,60 @@
         .s-5 { top: 30%; right: 60%; animation-delay: 0.5s; }
         .s-6 { top: 10%; right: 25%; animation-delay: 5s; }
 
-        /* (ส่วน Content Box, Nav, ฯลฯ ใช้โค้ดเดิมของคุณได้เลยครับ) */
+        /* 📦 📦 Glassmorphism UI */
         .glass-box {
             background: rgba(26, 29, 35, 0.85);
             backdrop-filter: blur(10px);
             border: 1px solid var(--bg-border);
-            box-shadow: 0 8px 32px 0 rgba(11, 13, 18, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
-        /* ... โค้ดส่วนอื่นๆ คงไว้ตามเดิม ... */
+        .tab-content { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .profile-anim { animation: floatProfile 3.5s ease-in-out infinite; }
+        @keyframes floatProfile {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.05); }
+        }
+
+        /* 📱 📱 Bottom Navbar */
+        .bottom-nav {
+            background: rgba(17, 19, 23, 0.95);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--bg-border);
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.5);
+        }
+        .nav-btn:active { transform: scale(0.85); } 
+        .nav-active .nav-img-box { border: 2px solid var(--accent-gold); transform: translateY(-3px); }
+        .nav-active .nav-text { color: var(--accent-gold); font-weight: 700; }
+        .nav-text { color: var(--text-muted); font-size: 11px; }
+
+        /* 🟢 🔴 จุดออนไลน์/ออฟไลน์ */
+        .status-online { background-color: #22c55e; box-shadow: 0 0 12px #22c55e; }
+        .status-offline { background-color: #ef4444; box-shadow: 0 0 12px #ef4444; }
+        .glow-pulse { animation: glowPulse 2s infinite alternate; }
+        @keyframes glowPulse { 0% { filter: brightness(1); } 100% { filter: brightness(1.5); } }
+
+        /* 🧸 🫧 ลูกเล่นจิ้มจอ */
+        .emoji-pop {
+            position: fixed; pointer-events: none; font-size: 28px; z-index: 9999;
+            animation: popUp 1s forwards;
+        }
+        @keyframes popUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150px) scale(1); opacity: 0; }
+        }
+
+        /* 🛒 ตะกร้าสินค้า */
+        #floating-cart {
+            position: fixed; top: 20px; right: 20px; z-index: 50;
+            background: var(--accent-gold); color: var(--bg-main); padding: 8px 16px;
+            border-radius: 30px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(201, 194, 163, 0.3);
+        }
+        .price-item { cursor: pointer; transition: 0.2s; }
+        .price-item:hover { background: rgba(201, 194, 163, 0.1); border-radius: 8px; transform: translateX(5px); }
     </style>
 </head>
 <body>
@@ -102,3 +141,213 @@
         <div class="shooting-star s-5"></div>
         <div class="shooting-star s-6"></div>
     </div>
+
+    <div id="floating-cart" onclick="clearCart()">
+        <i class="fa-solid fa-cart-shopping"></i> <span id="cart-total-amt">0</span>฿
+    </div>
+
+    <div id="yt-player" style="position: absolute; top: -9999px; left: -9999px; width: 1px; height: 1px;"></div>
+
+    <div class="pt-8 pb-32 max-w-5xl mx-auto px-4">
+
+        <section id="home" class="tab-content active">
+            <div class="relative h-64 rounded-xl overflow-hidden border border-white/5 bg-black">
+                <img src="https://i.postimg.cc/43TByJ6j/44D68FC2-B12E-4B2B-8B14-DEA10B8A1C97.gif" class="w-full h-full object-cover opacity-60">
+            </div>
+            <div class="flex justify-center -mt-16 relative z-10">
+                <div class="relative inline-block profile-anim">
+                    <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" class="w-32 h-32 rounded-full border-4 border-[#2A2E36] object-cover shadow-2xl">
+                    <div class="shop-status-indicator glow-pulse absolute bottom-1 right-2 w-6 h-6 rounded-full border-4 border-[#2A2E36]"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-6 mb-10 glass-box p-6 rounded-3xl mx-auto max-w-sm">
+                <h1 class="text-3xl font-bold" style="color: var(--accent-gold);">Welcome to bebby</h1>
+                <p class="text-gray-400 mt-2">Admin ice / bebby</p>
+                <p class="text-sm mt-3 px-5 py-2 rounded-full border border-white/10" style="background: var(--deep-gray); color: var(--accent-gold);">สั่งซื้อ / สอบถามทักไลน์ หรือ DM message</p>
+            </div>
+
+            <div class="glass-box p-6 rounded-xl mb-8 space-y-3 text-gray-300">
+                <p>🐈‍⬛ 𓏔 line : <b class="text-white">@741eynzz</b> (มี@)</p>
+                <p>𓈒 —🐈‍⬛ งานป้ายเริ่มต้น 49 - 599฿ มีราคาเหมา 3 ป้ายขึ้นไป ┊</p>
+                <p>⏳ รองาน 1 - 14 วันตามคิว ( สอบถามคิวงานก่อนได้ค่ะ )</p>
+                <p>📓 คิดราคาตามรายละเอียดของงาน ปรึกษาได้น้า 💡🧸</p>
+                <p>📁 : <b class="text-white">ส่งงานผ่าน Google Drive เท่านั้น !</b></p>
+                <p>✅ : บรีฟงานได้ทุกอย่าง ข้อมูลลูกค้าต้องพกเตรียมมาเอง</p>
+            </div>
+
+            <div class="glass-box p-6 rounded-2xl mb-10">
+                <h2 class="text-xl font-bold mb-6 text-center" style="color: var(--accent-gold);">Hard Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-white italic">C</div>
+                        <div class="flex-1">
+                            <p class="text-xs mb-1">Canva</p>
+                            <div class="w-full bg-black/40 h-1.5 rounded-full"><div class="h-1.5 rounded-full" style="width: 100%; background: var(--accent-gold);"></div></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-black border border-white/20 flex items-center justify-center"><i class="fa-solid fa-scissors text-white"></i></div>
+                        <div class="flex-1">
+                            <p class="text-xs mb-1">CapCut</p>
+                            <div class="w-full bg-black/40 h-1.5 rounded-full"><div class="h-1.5 rounded-full" style="width: 90%; background: var(--accent-gold);"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <img src="https://i.postimg.cc/pVD8VDGP/reth-2.png" class="rounded-xl border border-white/10 shadow-lg">
+                <img src="https://i.postimg.cc/3r4h2154/reth.jpg" class="rounded-xl border border-white/10 shadow-lg">
+            </div>
+        </section>
+
+        <section id="price" class="tab-content">
+            <div class="text-center mb-10 relative">
+                <h2 class="text-3xl font-bold inline-block px-8 py-3 rounded-full glass-box relative">
+                    Price List
+                    <div class="shop-status-indicator glow-pulse absolute -top-1 -right-1 w-5 h-5 rounded-full border-2 border-white/20"></div>
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-box p-6 rounded-2xl">
+                    <h3 class="font-bold border-b border-white/10 pb-2 mb-4">งานออกแบบ</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(99)"><span>บล็อก</span> <span style="color: var(--accent-gold);">99฿</span></div>
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(45)"><span>แนวสว่าง / เรียบ</span> <span style="color: var(--accent-gold);">45฿</span></div>
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(59)"><span>แนวกึ่ง ads.</span> <span style="color: var(--accent-gold);">59฿</span></div>
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(49)"><span>งานป้าย</span> <span style="color: var(--accent-gold);">49฿</span></div>
+                    </div>
+                </div>
+                <div class="glass-box p-6 rounded-2xl">
+                    <h3 class="font-bold border-b border-white/10 pb-2 mb-4">โปรโมชั่น ลายน้ำ</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(240)"><span>10 งาน (สีสัน)</span> <span><s class="text-xs text-gray-500">250</s> <span style="color: var(--accent-gold);">240฿</span></span></div>
+                        <div class="flex justify-between price-item p-2" onclick="addToCart(145)"><span>10 งาน (ขาวดำ)</span> <span><s class="text-xs text-gray-500">150</s> <span style="color: var(--accent-gold);">145฿</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="step" class="tab-content">
+            <h2 class="text-2xl font-bold text-center mb-8" style="color: var(--accent-gold);">How to order</h2>
+            <div class="glass-box p-8 rounded-3xl space-y-6">
+                <div class="timeline-item"><p class="text-white font-bold">1. บรีฟงานและสรุปยอด</p></div>
+                <div class="timeline-item"><p class="text-white font-bold">2. โอนจองคิว (100% หรือ 50% สำหรับ 300฿+)</p></div>
+                <div class="timeline-item"><p class="text-white font-bold">3. รองาน 5-12 วัน (ห้ามยกเลิก/คืนเงิน)</p></div>
+            </div>
+        </section>
+
+        <section id="example" class="tab-content">
+            <h2 class="text-2xl font-bold text-center mb-8" style="color: var(--accent-gold);">Examples</h2>
+            <div id="portfolio-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <p class="col-span-full text-center text-gray-500">กำลังดึงข้อมูลจากดวงดาว...</p>
+            </div>
+        </section>
+
+        <section id="contact" class="tab-content text-center">
+            <div class="glass-box p-10 rounded-3xl max-w-md mx-auto">
+                <img src="https://i.postimg.cc/dQXRDswq/IMG-5722.jpg" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-white/20 profile-anim">
+                <h3 class="text-xl font-bold mb-6">Admin Ice / Bebby</h3>
+                <a href="https://line.me/ti/p/~@741eynzz" class="block w-full bg-[#00B900] text-black font-bold py-4 rounded-2xl transition hover:scale-105">
+                    <i class="fa-brands fa-line mr-2"></i> LINE: @741eynzz
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <nav class="bottom-nav fixed bottom-0 left-0 w-full z-40 rounded-t-3xl">
+        <div class="max-w-md mx-auto px-6 py-3 flex justify-between">
+            <button onclick="changeTab('home')" class="nav-btn nav-active" data-target="home">
+                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/xTkrBDvX/243C55CD-5DC1-430F-B431-80DD3C372D32.gif" class="w-full h-full object-cover"></div>
+                <p class="nav-text">Home</p>
+            </button>
+            <button onclick="changeTab('price')" class="nav-btn" data-target="price">
+                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/7Z7FY3tm/40A87F10-070D-4ECF-9D9D-E4D3D4F50EF2.gif" class="w-full h-full object-cover"></div>
+                <p class="nav-text">Price</p>
+            </button>
+            <button onclick="changeTab('step')" class="nav-btn" data-target="step">
+                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/JzJf4NYK/A2202418-9842-4824-A3CC-ACA699743ED3.gif" class="w-full h-full object-cover"></div>
+                <p class="nav-text">Step</p>
+            </button>
+            <button onclick="changeTab('example')" class="nav-btn" data-target="example">
+                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/dVdbt2N9/C0030FE7-E1E0-424F-824F-488AAB8FFBC3.gif" class="w-full h-full object-cover"></div>
+                <p class="nav-text">Example</p>
+            </button>
+            <button onclick="changeTab('contact')" class="nav-btn" data-target="contact">
+                <div class="nav-img-box w-10 h-10 rounded-full overflow-hidden mb-1"><img src="https://i.postimg.cc/XYFR7fDb/F457A68B-6E08-44FE-B97B-3A8B84BB1F2E.gif" class="w-full h-full object-cover"></div>
+                <p class="nav-text">Contact</p>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // 1. สถานะเปิดร้านอัตโนมัติ (6:00 - 0:59)
+        function updateShopStatus() {
+            const hour = new Date().getHours();
+            const isOnline = (hour >= 6 || hour === 0);
+            document.querySelectorAll('.shop-status-indicator').forEach(dot => {
+                dot.className = `shop-status-indicator glow-pulse absolute ${dot.classList.contains('bottom-1') ? 'bottom-1 right-2 w-6 h-6' : '-top-1 -right-1 w-5 h-5'} rounded-full ${isOnline ? 'status-online' : 'status-offline'}`;
+            });
+        }
+        updateShopStatus(); setInterval(updateShopStatus, 60000);
+
+        // 2. ตะกร้าสินค้า
+        let cartTotal = 0;
+        function addToCart(price) { cartTotal += price; document.getElementById('cart-total-amt').innerText = cartTotal; }
+        function clearCart() { if(confirm("ล้างยอด?")) { cartTotal = 0; document.getElementById('cart-total-amt').innerText = 0; } }
+
+        // 3. เปลี่ยนแท็บ
+        function changeTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('nav-active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`[data-target="${tabId}"]`).classList.add('nav-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 4. YouTube Autoplay
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-player', {
+                height: '1', width: '1', videoId: 'FbrH6dDPERI',
+                playerVars: { autoplay: 1, loop: 1, playlist: 'FbrH6dDPERI', playsinline: 1 },
+                events: { 'onReady': e => { e.target.setVolume(100); e.target.playVideo(); } }
+            });
+        }
+        var tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+        // ปลุกเพลงเมื่อมีการจิ้มจอครั้งแรก (กันบล็อกเสียง)
+        document.body.addEventListener('click', () => { if(player) player.playVideo(); }, {once:true});
+
+        // 5. ลูกเล่นจิ้มจอ
+        const emojis = ['🧸', '🫧', '👑', '🌥️', '🍄', '⭐️', '🩷'];
+        document.addEventListener('click', e => {
+            const span = document.createElement('span');
+            span.className = 'emoji-pop';
+            span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+            span.style.left = e.clientX + 'px'; span.style.top = e.clientY + 'px';
+            document.body.appendChild(span);
+            setTimeout(() => span.remove(), 1000);
+        });
+
+        // 6. ดึงข้อมูล Google Sheets
+        async function loadPortfolio() {
+            try {
+                const res = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vT6Kp5sH2tv2KWttHXJvgxh3Lo1yAkNE-m2qjjYdR68C7pE8IJ0hWCMKsYkRn891OIKQJI_JKFJaa5b/pub?output=csv');
+                const data = await res.text();
+                const rows = data.split('\n').slice(1);
+                let html = '';
+                rows.forEach(row => {
+                    const parts = row.split(',');
+                    const url = parts[0].replace(/["\r]/g, '').trim();
+                    const title = parts[1]?.replace(/["\r]/g, '').trim() || '';
+                    if(url) html += `<div class="glass-box rounded-xl overflow-hidden h-48"><img src="${url}" class="w-full h-full object-cover transition hover:scale-110"><p class="text-[10px] p-1 text-center">${title}</p></div>`;
+                });
+                document.getElementById('portfolio-gallery').innerHTML = html || 'ยังไม่มีข้อมูล';
+            } catch { document.getElementById('portfolio-gallery').innerHTML = 'โหลดล้มเหลว'; }
+        }
+        loadPortfolio();
+    </script>
+</body>
+</html>
