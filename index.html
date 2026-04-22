@@ -346,15 +346,29 @@
                 rows.forEach(row => {
                     const firstComma = row.indexOf(','); // แยกข้อมูลด้วยลูกน้ำ
                     if (firstComma > 0) {
-                        // ลบเครื่องหมายฟันหนู (") และช่องว่างส่วนเกินออกจากลิงก์รูป
-                        const imgUrl = row.substring(0, firstComma).replace(/["\r]/g, '').trim();
-                        // ลบเครื่องหมายฟันหนู (") ออกจากชื่อผลงาน
+                        // 1. ดึงข้อความในคอลัมน์แรกมาทำความสะอาด
+                        let rawUrl = row.substring(0, firstComma).replace(/["\r]/g, '').trim();
+                        let finalUrl = rawUrl;
+                        
+                        // 2. ถ้าเผลอก๊อปโค้ด HTML มา ให้ดึงเฉพาะลิงก์ใน src="..."
+                        const srcMatch = rawUrl.match(/src=['"]([^'"]+)['"]/i);
+                        if (srcMatch) {
+                            finalUrl = srcMatch[1];
+                        } else {
+                            // 3. ถ้าเผลอก๊อปโค้ด BBCode มา ให้ดึงเฉพาะลิงก์ใน [img]...[/img]
+                            const bbcodeMatch = rawUrl.match(/\[img\](.*?)\[\/img\]/i);
+                            if (bbcodeMatch) {
+                                finalUrl = bbcodeMatch[1];
+                            }
+                        }
+
+                        // ดึงชื่อผลงานและทำความสะอาด
                         const title = row.substring(firstComma + 1).replace(/["\r]/g, '').trim();
                         
-                        if (imgUrl !== '') {
+                        if (finalUrl !== '') {
                             htmlContent += `
-                            <div class="relative group rounded-xl overflow-hidden shadow-sm">
-                                <img src="${imgUrl}" class="w-full h-full object-cover transition transform group-hover:scale-110" alt="Work">
+                            <div class="relative group rounded-xl overflow-hidden shadow-sm h-48 md:h-64">
+                                <img src="${finalUrl}" class="w-full h-full object-cover transition transform group-hover:scale-110 bg-gray-100" alt="Work" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Error'">
                                 <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-2 text-center text-sm font-bold opacity-0 group-hover:opacity-100 transition">${title}</div>
                             </div>`;
                         }
